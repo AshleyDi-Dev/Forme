@@ -1,0 +1,50 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-family);
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  line-height: 1;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+/* ── Quiz module colours ──────────────────────
+   Each uses a distinct muted hue so they are
+   distinguishable at a glance without shouting.
+   ─────────────────────────────────────────── */
+
+.body {
+  background: #F0EBE6;
+  color: #7A5444;
+  border-color: #DFD0C7;
+}
+
+.face {
+  background: #EAE8F0;
+  color: #4D4870;
+  border-color: #D4D1E5;
+}
+
+.hair {
+  background: #E8EDE9;
+  color: #3D6044;
+  border-color: #C9D9CB;
+}
+
+.color {
+  background: #EDE8E3;
+  color: #6B5740;
+  border-color: #DDD3C9;
+}
+
+/* ── Neutral fallback ── */
+.neutral {
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}

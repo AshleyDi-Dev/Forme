@@ -17,6 +17,7 @@ import Profile      from './pages/Profile'
 import Style        from './pages/Style'
 import OutfitBuilder from './pages/OutfitBuilder'
 import Saved        from './pages/Saved'
+import Tokens       from './pages/Tokens'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Routes>
           {/* Public */}
           <Route path="/" element={<Welcome />} />
+          <Route path="/tokens" element={<Tokens />} />
 
           {/* Public only — redirect to /home if already logged in */}
           <Route element={<PublicOnlyRoute />}>

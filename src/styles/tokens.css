@@ -1,0 +1,64 @@
+/* ─────────────────────────────────────────────
+   GlowUp Design Tokens
+   ───────────────────────────────────────────── */
+
+:root {
+
+  /* ── Colour ───────────────────────────────── */
+
+  --color-bg:               #F9F7F5;   /* warm off-white */
+  --color-surface:          #FFFFFF;   /* card / sheet surface */
+  --color-text-primary:     #1A1A1A;   /* near-black */
+  --color-text-secondary:   #767676;   /* muted grey */
+  --color-border:           #E8E4E0;   /* barely-there border */
+
+  --color-accent:           #B87F6A;   /* warm terracotta */
+  --color-accent-muted:     #F0E6E1;   /* accent tint for backgrounds */
+
+  --color-success:          #5A8A6A;   /* muted sage */
+  --color-success-muted:    #EAF2EC;
+  --color-error:            #C05A5A;   /* muted red */
+  --color-error-muted:      #F9EDED;
+  --color-warning:          #B87D3E;   /* muted amber */
+  --color-warning-muted:    #FAF2E6;
+
+  /* ── Typography ───────────────────────────── */
+
+  --font-family:            'Jost', sans-serif;
+
+  --text-display:           2.5rem;    /* 40px — hero headings */
+  --text-heading:           1.75rem;   /* 28px — page titles */
+  --text-subheading:        1.25rem;   /* 20px — section titles */
+  --text-body:              1rem;      /* 16px — body copy */
+  --text-caption:           0.8125rem; /* 13px — supporting text */
+  --text-label:             0.75rem;   /* 12px — badges, tags, labels */
+
+  --font-weight-regular:    400;
+  --font-weight-medium:     500;
+
+  --line-height-tight:      1.2;       /* display & headings */
+  --line-height-body:       1.6;       /* body & caption */
+
+  --letter-spacing-tight:   -0.02em;   /* display & headings */
+  --letter-spacing-wide:    0.06em;    /* labels & badges */
+
+  /* ── Spacing (4px base unit) ──────────────── */
+
+  --space-xs:               4px;
+  --space-sm:               8px;
+  --space-md:               16px;
+  --space-lg:               24px;
+  --space-xl:               40px;
+  --space-2xl:              64px;
+
+  /* ── Border radius ────────────────────────── */
+
+  --radius-sm:              4px;       /* badges, inputs, tags */
+  --radius-md:              8px;       /* cards, buttons */
+  --radius-lg:              12px;      /* modals, bottom sheets */
+
+  /* ── Shadow ───────────────────────────────── */
+
+  --shadow-card:            0 1px 3px rgba(0, 0, 0, 0.06),
+                            0 1px 2px rgba(0, 0, 0, 0.04);
+}

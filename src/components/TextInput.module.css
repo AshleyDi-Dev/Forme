@@ -1,0 +1,80 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.label {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.input {
+  width: 100%;
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  line-height: var(--line-height-body);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  outline: none;
+  appearance: none;
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.input:focus {
+  border-color: var(--color-text-primary);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.06);
+}
+
+/* ── Error ── */
+.inputError {
+  border-color: var(--color-error);
+}
+.inputError:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(192, 90, 90, 0.1);
+}
+
+/* ── Success ── */
+.inputSuccess {
+  border-color: var(--color-success);
+}
+.inputSuccess:focus {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 3px rgba(90, 138, 106, 0.1);
+}
+
+/* ── Disabled ── */
+.input:disabled {
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ── Helper text ── */
+.helperText {
+  font-size: var(--text-caption);
+  line-height: var(--line-height-body);
+  color: var(--color-text-secondary);
+}
+
+.errorText {
+  color: var(--color-error);
+}
+
+.successText {
+  color: var(--color-success);
+}
