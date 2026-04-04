@@ -1,4 +1,6 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { supabase } from '../lib/supabase'
 
 const tabs = [
   { label: 'Home',    to: '/home' },
@@ -37,6 +39,14 @@ const activeStyle = {
 }
 
 export default function NavBar() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    navigate('/login')
+  }
+
   return (
     <nav style={navStyle}>
       {tabs.map(({ label, to }) => (
@@ -48,6 +58,11 @@ export default function NavBar() {
           {label}
         </NavLink>
       ))}
+      {user && (
+        <button onClick={handleLogout} style={tabStyle}>
+          Log out
+        </button>
+      )}
     </nav>
   )
 }
