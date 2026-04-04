@@ -6,6 +6,7 @@ export default function Welcome() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
+
         <p className={styles.wordmark}>GlowUp</p>
 
         <div className={styles.hero}>
@@ -13,7 +14,8 @@ export default function Welcome() {
             Learn what works for your body — and wear it with confidence.
           </h1>
           <p className={styles.supporting}>
-            Understand your features, find your fit, and build a wardrobe that actually makes sense.
+            Find your proportions, face shape, hair profile, and best colors — then turn that
+            into styling guidance that actually makes sense for you.
           </p>
         </div>
 
@@ -22,9 +24,11 @@ export default function Welcome() {
             <Button fullWidth>Get started</Button>
           </Link>
           <Link to="/login">
-            <Button variant="ghost" fullWidth>Already have an account? Log in</Button>
+            <Button variant="ghost" fullWidth>Sign in</Button>
           </Link>
+          <p className={styles.demoNote}>Explore demo coming soon</p>
         </div>
+
       </div>
     </div>
   )
