@@ -1,0 +1,36 @@
+.guideRow {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  padding: var(--space-sm) 0;
+}
+
+.shapeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  flex: 1;
+  max-width: 72px;
+}
+
+.shapeSvg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.shapeSvg path {
+  fill: none;
+  stroke: var(--color-text-secondary);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.shapeLabel {
+  font-size: 9px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  letter-spacing: 0.03em;
+}

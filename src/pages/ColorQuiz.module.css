@@ -1,0 +1,171 @@
+/* ── Result page shell ───────────────────────── */
+
+.resultPage {
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md) var(--space-2xl);
+  background: var(--color-bg);
+}
+
+.resultContainer {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* ── Header ──────────────────────────────────── */
+
+.resultHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.resultEyebrow {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.resultLabel {
+  font-size: var(--text-display);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+
+.resultDescription {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
+}
+
+/* ── Palette strip ───────────────────────────── */
+
+.paletteStrip {
+  display: flex;
+  gap: var(--space-xs);
+  height: 48px;
+}
+
+.swatch {
+  flex: 1;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Guidance blocks ─────────────────────────── */
+
+.guidance {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.guidanceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.guidanceHeading {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.guidanceList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.guidanceList li {
+  font-size: var(--text-caption);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-body);
+  padding-left: var(--space-md);
+  position: relative;
+}
+
+.guidanceList li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-size: var(--text-caption);
+}
+
+/* ── Actions ─────────────────────────────────── */
+
+.resultActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.savedConfirmation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-success);
+  padding: var(--space-md) 0;
+  width: 100%;
+}
+
+.backLink {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.backLink:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── Upgrade teaser ──────────────────────────── */
+
+.teaser {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-muted);
+}
+
+.teaserEyebrow {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.teaserHeading {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.teaserBody {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
+  margin-bottom: var(--space-xs);
+}
