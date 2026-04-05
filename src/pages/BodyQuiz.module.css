@@ -1,5 +1,6 @@
-/* ── Result page shell ───────────────────────── */
+/* ── Shared page shell ───────────────────────── */
 
+.introPage,
 .resultPage {
   min-height: 100svh;
   display: flex;
@@ -9,7 +10,9 @@
   background: var(--color-bg);
 }
 
-.resultContainer {
+/* ── Intro screen ────────────────────────────── */
+
+.introContainer {
   width: 100%;
   max-width: 480px;
   display: flex;
@@ -17,12 +20,56 @@
   gap: var(--space-2xl);
 }
 
+.introHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.introEyebrow {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.introHeading {
+  font-size: var(--text-heading);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+
+.introBody {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
+}
+
+.introActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* ── Result container ────────────────────────── */
+
+.resultContainer {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
 /* ── Result header ───────────────────────────── */
 
 .resultHeader {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
 }
 
 .resultEyebrow {
@@ -41,10 +88,68 @@
   color: var(--color-text-primary);
 }
 
-.resultDescription {
+.confidence {
+  align-self: flex-start;
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: var(--color-accent-muted);
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-sm);
+}
+
+.resultSummary {
   font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-body);
+  margin-top: var(--space-xs);
+}
+
+.resultDescription {
+  font-size: var(--text-caption);
   color: var(--color-text-secondary);
   line-height: var(--line-height-body);
+}
+
+/* ── What this means ─────────────────────────── */
+
+.whatThisMeans {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.sectionHeading {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.meansList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.meansList li {
+  font-size: var(--text-caption);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-body);
+  padding-left: var(--space-md);
+  position: relative;
+}
+
+.meansList li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
 }
 
 /* ── Actions ─────────────────────────────────── */
@@ -56,7 +161,9 @@
   align-items: center;
 }
 
-/* ── Saved confirmation ──────────────────────── */
+.fullWidth {
+  width: 100%;
+}
 
 .savedConfirmation {
   display: flex;
@@ -70,14 +177,17 @@
   width: 100%;
 }
 
-/* ── Back link ───────────────────────────────── */
-
-.backLink {
+.textLink {
   font-size: var(--text-caption);
   color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  padding: 0;
   margin-top: var(--space-xs);
 }
 
-.backLink:hover {
+.textLink:hover {
   color: var(--color-text-primary);
 }
