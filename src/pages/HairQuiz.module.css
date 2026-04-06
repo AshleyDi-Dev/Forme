@@ -212,14 +212,47 @@
   width: 100%;
 }
 
-/* ── Back link ───────────────────────────────── */
+/* ── Text links ──────────────────────────────── */
 
-.backLink {
+.backLink,
+.textLink {
   font-size: var(--text-caption);
   color: var(--color-text-secondary);
   margin-top: var(--space-xs);
 }
 
-.backLink:hover {
+.backLink:hover,
+.textLink:hover {
   color: var(--color-text-primary);
+}
+
+.textLink {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  padding: 0;
+}
+
+/* ── Full-width link wrapper ─────────────────── */
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ── Reset confirmation ──────────────────────── */
+
+.resetConfirm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.resetConfirmText {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
+  text-align: center;
 }

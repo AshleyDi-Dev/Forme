@@ -399,7 +399,9 @@ function ProfileContent({ result, eyebrow }) {
 
 // ── Result screen ─────────────────────────────────────────────────
 
-function ResultScreen({ result, onSave, onRetake, saving, saved }) {
+function ResultScreen({ result, onSave, onRetake, onReset, saving, saved, resetting }) {
+  const [confirmReset, setConfirmReset] = useState(false)
+
   return (
     <div className={styles.resultPage}>
       <div className={styles.resultContainer}>
@@ -416,10 +418,37 @@ function ResultScreen({ result, onSave, onRetake, saving, saved }) {
               Save result
             </Button>
           )}
-          <Button variant="ghost" fullWidth onClick={onRetake}>
+
+          <Link to="/analyze/color" className={styles.fullWidth}>
+            <Button variant="ghost" fullWidth>Continue to colour quiz</Button>
+          </Link>
+
+          {confirmReset ? (
+            <div className={styles.resetConfirm}>
+              <p className={styles.resetConfirmText}>
+                This will permanently clear your hair profile. You'll start fresh from the beginning.
+              </p>
+              <Button variant="destructive" fullWidth loading={resetting} onClick={onReset}>
+                Yes, reset my hair data
+              </Button>
+              <button
+                type="button"
+                className={styles.textLink}
+                onClick={() => setConfirmReset(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <Button variant="ghost" fullWidth onClick={() => setConfirmReset(true)}>
+              Reset section
+            </Button>
+          )}
+
+          <button type="button" className={styles.textLink} onClick={onRetake}>
             Retake quiz
-          </Button>
-          <Link to="/analyze" className={styles.backLink}>
+          </button>
+          <Link to="/analyze" className={styles.textLink}>
             Back to Analyze
           </Link>
         </div>
@@ -429,7 +458,9 @@ function ResultScreen({ result, onSave, onRetake, saving, saved }) {
   )
 }
 
-function PreviousResultScreen({ result, onRetake }) {
+function PreviousResultScreen({ result, onRetake, onReset, resetting }) {
+  const [confirmReset, setConfirmReset] = useState(false)
+
   return (
     <div className={styles.resultPage}>
       <div className={styles.resultContainer}>
@@ -437,10 +468,36 @@ function PreviousResultScreen({ result, onRetake }) {
         <ProfileContent result={result} eyebrow="Your saved hair profile" />
 
         <div className={styles.resultActions}>
-          <Button variant="ghost" fullWidth onClick={onRetake}>
+          <Link to="/analyze/color" className={styles.fullWidth}>
+            <Button variant="ghost" fullWidth>Continue to colour quiz</Button>
+          </Link>
+
+          {confirmReset ? (
+            <div className={styles.resetConfirm}>
+              <p className={styles.resetConfirmText}>
+                This will permanently clear your hair profile. You'll start fresh from the beginning.
+              </p>
+              <Button variant="destructive" fullWidth loading={resetting} onClick={onReset}>
+                Yes, reset my hair data
+              </Button>
+              <button
+                type="button"
+                className={styles.textLink}
+                onClick={() => setConfirmReset(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <Button variant="ghost" fullWidth onClick={() => setConfirmReset(true)}>
+              Reset section
+            </Button>
+          )}
+
+          <button type="button" className={styles.textLink} onClick={onRetake}>
             Retake quiz
-          </Button>
-          <Link to="/analyze" className={styles.backLink}>
+          </button>
+          <Link to="/analyze" className={styles.textLink}>
             Back to Analyze
           </Link>
         </div>
@@ -463,6 +520,7 @@ export default function HairQuiz() {
   const [skipPrev, setSkipPrev]       = useState(false)
   const [saving, setSaving]           = useState(false)
   const [saved, setSaved]             = useState(false)
+  const [resetting, setResetting]     = useState(false)
 
   useEffect(() => {
     async function load() {
@@ -532,6 +590,33 @@ export default function HairQuiz() {
     setSkipPrev(true)
   }
 
+  async function handleReset() {
+    setResetting(true)
+
+    const { error } = await supabase.from('style_summary').upsert(
+      {
+        user_id:                user.id,
+        hair_texture:           null,
+        hair_density:           null,
+        hair_porosity:          null,
+        hair_current_color:     null,
+        hair_natural_color:     null,
+        hair_styling_tendency:  null,
+        hair_style_hold:        null,
+      },
+      { onConflict: 'user_id' }
+    )
+    if (error) console.error('[HairQuiz] reset error:', error)
+
+    setSavedResult(null)
+    setNewResult(null)
+    setNewAnswers(null)
+    setSaved(false)
+    setSkipPrev(false)
+    setQuizStarted(false)
+    setResetting(false)
+  }
+
   if (loading) return null
 
   if (newResult) {
@@ -540,8 +625,10 @@ export default function HairQuiz() {
         result={newResult}
         onSave={handleSave}
         onRetake={handleRetakeFromResult}
+        onReset={handleReset}
         saving={saving}
         saved={saved}
+        resetting={resetting}
       />
     )
   }
@@ -551,6 +638,8 @@ export default function HairQuiz() {
       <PreviousResultScreen
         result={savedResult}
         onRetake={() => { setSkipPrev(true); setQuizStarted(false) }}
+        onReset={handleReset}
+        resetting={resetting}
       />
     )
   }
