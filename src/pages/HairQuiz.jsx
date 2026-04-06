@@ -153,6 +153,33 @@ const POROSITY_INFO = {
   High:   'Your hair cuticle is more open, absorbing moisture quickly but losing it just as fast. Seal moisture in with heavier creams or oils after washing, and use protein treatments to strengthen the cuticle.',
 }
 
+// ── Intro screen ─────────────────────────────────────────────────
+
+function IntroScreen({ onStart }) {
+  return (
+    <div className={styles.introPage}>
+      <div className={styles.introContainer}>
+        <div className={styles.introHeader}>
+          <p className={styles.introEyebrow}>Hair quiz</p>
+          <h1 className={styles.introHeading}>Hair profile</h1>
+          <p className={styles.introBody}>
+            Hair can change over time — colour, texture, length. So you'll be able to reset
+            and update this section whenever you need to.
+          </p>
+        </div>
+        <div className={styles.introActions}>
+          <Button fullWidth onClick={onStart}>
+            Start hair quiz
+          </Button>
+          <Link to="/analyze">
+            <Button variant="ghost" fullWidth>Back to Analyze</Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Result screen ─────────────────────────────────────────────────
 
 function ResultScreen({ result, onSave, onRetake, saving, saved }) {
@@ -274,6 +301,7 @@ export default function HairQuiz() {
   const { user } = useAuth()
 
   const [loading, setLoading]         = useState(true)
+  const [quizStarted, setQuizStarted] = useState(false)
   const [savedResult, setSavedResult] = useState(null)
   const [newResult, setNewResult]     = useState(null)
   const [newAnswers, setNewAnswers]   = useState(null)
@@ -359,9 +387,13 @@ export default function HairQuiz() {
     return (
       <PreviousResultScreen
         result={savedResult}
-        onRetake={() => setSkipPrev(true)}
+        onRetake={() => { setSkipPrev(true); setQuizStarted(false) }}
       />
     )
+  }
+
+  if (!quizStarted) {
+    return <IntroScreen onStart={() => setQuizStarted(true)} />
   }
 
   return (
