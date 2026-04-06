@@ -359,12 +359,40 @@ function PreviousResultScreen({ season, onRetake }) {
   )
 }
 
+// ── Intro screen ─────────────────────────────────────────────────
+
+function IntroScreen({ onStart }) {
+  return (
+    <div className={styles.introPage}>
+      <div className={styles.introContainer}>
+        <div className={styles.introHeader}>
+          <p className={styles.introEyebrow}>Color quiz</p>
+          <h1 className={styles.introHeading}>Color analysis</h1>
+          <p className={styles.introBody}>
+            This section helps identify the kinds of colors that may make your features
+            look clearer, brighter, and more harmonious.
+          </p>
+        </div>
+        <div className={styles.introActions}>
+          <Button fullWidth onClick={onStart}>
+            Start color quiz
+          </Button>
+          <Link to="/analyze">
+            <Button variant="ghost" fullWidth>Back to Analyze</Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Main component ────────────────────────────────────────────────
 
 export default function ColorQuiz() {
   const { user } = useAuth()
 
   const [loading, setLoading]         = useState(true)
+  const [quizStarted, setQuizStarted] = useState(false)
   const [savedResult, setSavedResult] = useState(null)
   const [newResult, setNewResult]     = useState(null)
   const [newAnswers, setNewAnswers]   = useState(null)
@@ -439,9 +467,13 @@ export default function ColorQuiz() {
     return (
       <PreviousResultScreen
         season={savedResult}
-        onRetake={() => setSkipPrev(true)}
+        onRetake={() => { setSkipPrev(true); setQuizStarted(false) }}
       />
     )
+  }
+
+  if (!quizStarted) {
+    return <IntroScreen onStart={() => setQuizStarted(true)} />
   }
 
   return (
