@@ -8,31 +8,48 @@ import styles from './ColorQuiz.module.css'
 
 // ── Questions ────────────────────────────────────────────────────
 
+const HAIR_COLOR_NOTE = (
+  <p style={{ fontSize: 'var(--text-caption)', color: 'var(--color-text-secondary)', lineHeight: 'var(--line-height-body)', padding: 'var(--space-md)', background: 'var(--color-accent-muted)', borderRadius: 'var(--radius-md)' }}>
+    Note: if you've recently colored your hair, your results may shift slightly. You can retake this section anytime your hair changes.
+  </p>
+)
+
 const QUESTIONS = [
   {
     id: 'q1',
-    title: 'Look at the veins on the inside of your wrist in natural light. What color are they?',
-    tip: 'Check in daylight — artificial light can shift the colour.',
+    title: 'When you wear gold or silver jewelry near your face, which tends to look more natural?',
+    tip: null,
     guide: null,
     options: [
-      { value: 'bluish_purple',  label: 'Bluish or purple — quite cool toned' },
-      { value: 'greenish',       label: 'Greenish — quite warm toned' },
-      { value: 'mix_veins',      label: "A mix of both — I honestly can't tell" },
+      { value: 'gold_better',   label: 'Gold — it looks warm and harmonious against my skin' },
+      { value: 'silver_better', label: 'Silver — it looks crisp and right against my skin' },
+      { value: 'both_metal',    label: "Honestly both look fine, I can't tell a difference" },
     ],
   },
   {
     id: 'q2',
-    title: 'When you wear white and cream next to your face, which is more flattering?',
-    tip: null,
+    title: 'Look at the veins on the inside of your wrist in natural light. What color are they?',
+    tip: 'Check in daylight — artificial light can shift the colour.',
     guide: null,
     options: [
-      { value: 'bright_white',  label: 'Bright white — it makes me look fresh and alive' },
-      { value: 'cream_white',   label: 'Cream or off-white — bright white washes me out' },
-      { value: 'both_whites',   label: 'Both work pretty well honestly' },
+      { value: 'bluish_purple', label: 'Bluish or purple — quite cool toned' },
+      { value: 'greenish',      label: 'Greenish — quite warm toned' },
+      { value: 'mix_veins',     label: "A mix of both — I honestly can't tell" },
     ],
   },
   {
     id: 'q3',
+    title: 'When you wear white and cream next to your face, which is more flattering?',
+    tip: null,
+    guide: null,
+    options: [
+      { value: 'bright_white', label: 'Bright white — it makes me look fresh and alive' },
+      { value: 'cream_white',  label: 'Cream or off-white — bright white washes me out' },
+      { value: 'both_whites',  label: 'Both work pretty well honestly' },
+    ],
+  },
+  {
+    id: 'q4',
     title: 'Think about a time you got complimented on how you look. What were you wearing?',
     tip: null,
     guide: null,
@@ -43,31 +60,44 @@ const QUESTIONS = [
     ],
   },
   {
-    id: 'q4',
-    title: 'How would you describe your overall coloring — skin, hair, and eyes together?',
-    tip: null,
-    guide: null,
-    options: [
-      { value: 'very_light',    label: 'Very light overall — fair skin, light hair, light eyes' },
-      { value: 'medium_overall', label: "Medium — I'm not particularly light or dark" },
-      { value: 'deep_overall',  label: 'Deep overall — dark skin, dark hair, dark eyes' },
-      { value: 'high_contrast', label: 'I have a lot of contrast — one feature is very light and another very dark' },
-    ],
-  },
-  {
     id: 'q5',
-    title: 'What happens to your skin in the sun?',
+    title: 'What color are your eyes?',
     tip: null,
     guide: null,
     options: [
-      { value: 'burns_fair',  label: "I burn easily and rarely tan — I'm quite fair" },
-      { value: 'tan_golden',  label: 'I tan gradually and golden' },
-      { value: 'tan_deeply',  label: 'I tan quickly and deeply — my skin gets very dark' },
-      { value: 'deep_skin',   label: "I have deeper skin that rarely burns" },
+      { value: 'eyes_light_blue', label: 'Light blue or grey' },
+      { value: 'eyes_green',      label: 'Green or hazel' },
+      { value: 'eyes_light_brown',label: 'Light brown or amber' },
+      { value: 'eyes_dark_brown', label: 'Dark brown' },
+      { value: 'eyes_very_dark',  label: 'Very dark, almost black' },
     ],
   },
   {
     id: 'q6',
+    title: 'How would you describe your overall coloring — skin, hair, and eyes together?',
+    tip: null,
+    guide: null,
+    options: [
+      { value: 'very_light',     label: 'Very light overall — fair skin, light hair, light eyes' },
+      { value: 'medium_overall', label: "Medium — I'm not particularly light or dark" },
+      { value: 'deep_overall',   label: 'Deep overall — dark skin, dark hair, dark eyes' },
+      { value: 'high_contrast',  label: 'I have a lot of contrast — one feature is very light and another very dark' },
+    ],
+  },
+  {
+    id: 'q7',
+    title: 'What happens to your skin in the sun?',
+    tip: null,
+    guide: null,
+    options: [
+      { value: 'burns_fair', label: "I burn easily and rarely tan — I'm quite fair" },
+      { value: 'tan_golden', label: 'I tan gradually and golden' },
+      { value: 'tan_deeply', label: 'I tan quickly and deeply — my skin gets very dark' },
+      { value: 'deep_skin',  label: "I have deeper skin that rarely burns" },
+    ],
+  },
+  {
+    id: 'q8',
     title: 'How much contrast is there between your skin, hair, and eyes?',
     tip: null,
     guide: null,
@@ -78,14 +108,25 @@ const QUESTIONS = [
     ],
   },
   {
-    id: 'q7',
+    id: 'q9',
     title: 'Which of these best describes how you look in bold bright colors?',
     tip: null,
     guide: null,
     options: [
-      { value: 'overwhelm',   label: 'They overwhelm me — I look better in softer muted tones' },
-      { value: 'suit_well',   label: 'They suit me perfectly — I can carry a bold color easily' },
-      { value: 'depends_bold', label: 'Depends on the color — some bold shades work, others don\'t' },
+      { value: 'overwhelm',    label: 'They overwhelm me — I look better in softer muted tones' },
+      { value: 'suit_well',    label: 'They suit me perfectly — I can carry a bold color easily' },
+      { value: 'depends_bold', label: "Depends on the color — some bold shades work, others don't" },
+    ],
+  },
+  {
+    id: 'q10',
+    title: 'When you wear dark colors near your face versus light colors, which tends to be more flattering?',
+    tip: null,
+    guide: HAIR_COLOR_NOTE,
+    options: [
+      { value: 'dark_better',  label: 'Dark colors — they make me look more defined and awake' },
+      { value: 'light_better', label: 'Light colors — they make me look fresh and open' },
+      { value: 'both_depth',   label: 'Both work about the same for me' },
     ],
   },
 ]
@@ -93,36 +134,50 @@ const QUESTIONS = [
 // ── Scoring ──────────────────────────────────────────────────────
 
 const SCORE_MAP = {
-  // Q1 — vein color
-  bluish_purple:  { Summer: 2, Winter: 2 },
-  greenish:       { Spring: 2, Autumn: 2 },
-  mix_veins:      {},
-  // Q2 — white vs cream
-  bright_white:   { Summer: 2, Winter: 2 },
-  cream_white:    { Spring: 2, Autumn: 2 },
-  both_whites:    {},
-  // Q3 — compliment colors
+  // Q1 — jewelry metal
+  gold_better:   { Spring: 2, Autumn: 2 },
+  silver_better: { Summer: 2, Winter: 2 },
+  both_metal:    {},
+  // Q2 — vein color
+  bluish_purple: { Summer: 2, Winter: 2 },
+  greenish:      { Spring: 2, Autumn: 2 },
+  mix_veins:     {},
+  // Q3 — white vs cream
+  bright_white:  { Summer: 2, Winter: 2 },
+  cream_white:   { Spring: 2, Autumn: 2 },
+  both_whites:   {},
+  // Q4 — compliment colors
   cool_compliment: { Summer: 2, Winter: 2 },
   warm_compliment: { Spring: 2, Autumn: 2 },
   both_compliment: {},
-  // Q4 — overall coloring
+  // Q5 — eye color
+  eyes_light_blue:  { Summer: 3, Winter: 1 },
+  eyes_green:       { Spring: 2, Autumn: 1 },
+  eyes_light_brown: { Spring: 1, Autumn: 2 },
+  eyes_dark_brown:  { Autumn: 2, Winter: 2 },
+  eyes_very_dark:   { Winter: 3 },
+  // Q6 — overall coloring
   very_light:     { Spring: 3, Summer: 3 },
   medium_overall: { Spring: 1, Summer: 1, Autumn: 1, Winter: 1 },
   deep_overall:   { Autumn: 2, Winter: 3 },
   high_contrast:  { Winter: 3 },
-  // Q5 — sun reaction
-  burns_fair:  { Spring: 2, Summer: 2 },
-  tan_golden:  { Spring: 1, Autumn: 2 },
-  tan_deeply:  { Autumn: 1, Winter: 2 },
-  deep_skin:   { Autumn: 1, Winter: 2 },
-  // Q6 — contrast between features
+  // Q7 — sun reaction
+  burns_fair: { Spring: 2, Summer: 2 },
+  tan_golden: { Spring: 1, Autumn: 2 },
+  tan_deeply: { Autumn: 1, Winter: 2 },
+  deep_skin:  { Autumn: 1, Winter: 2 },
+  // Q8 — contrast between features
   very_little_c: { Summer: 2, Autumn: 2 },
   moderate_c:    { Spring: 1, Summer: 1, Autumn: 1, Winter: 1 },
   high_c:        { Winter: 3 },
-  // Q7 — bold colors
+  // Q9 — bold colors
   overwhelm:    { Summer: 2, Autumn: 2 },
   suit_well:    { Spring: 2, Winter: 2 },
   depends_bold: { Spring: 1, Summer: 1, Autumn: 1, Winter: 1 },
+  // Q10 — dark vs light
+  dark_better:  { Winter: 2, Autumn: 1 },
+  light_better: { Spring: 2, Summer: 2 },
+  both_depth:   {},
 }
 
 function calculateResult(answers) {
