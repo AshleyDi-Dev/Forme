@@ -686,31 +686,31 @@ function ResultActions({ onSave, onRetake, onReset, saving, saved, resetting }) 
         <Button variant="ghost" fullWidth>Continue to colour quiz</Button>
       </Link>
 
+      <div className={styles.retakeBlock}>
+        <Button variant="ghost" fullWidth onClick={onRetake}>Retake quiz</Button>
+        <p className={styles.actionNote}>Adds a new result to your history</p>
+      </div>
+
       {confirmReset ? (
         <div className={styles.resetConfirm}>
           <p className={styles.resetConfirmText}>
-            Your quiz history will be preserved — this only clears your current active profile.
+            Resetting removes your current result so you can start this section fresh. Your previous results are never deleted.
           </p>
           <Button variant="destructive" fullWidth loading={resetting} onClick={onReset}>
-            Yes, reset my hair profile
+            Yes, reset this section
           </Button>
-          <button
-            type="button"
-            className={styles.textLink}
-            onClick={() => setConfirmReset(false)}
-          >
+          <button type="button" className={styles.textLink} onClick={() => setConfirmReset(false)}>
             Cancel
           </button>
         </div>
       ) : (
-        <Button variant="ghost" fullWidth onClick={() => setConfirmReset(true)}>
-          Reset section
-        </Button>
+        <div className={styles.resetBlock}>
+          <button type="button" className={styles.textLink} onClick={() => setConfirmReset(true)}>
+            Reset this section
+          </button>
+          <p className={styles.actionNote}>Clears your current result, keeps your history</p>
+        </div>
       )}
-
-      <button type="button" className={styles.textLink} onClick={onRetake}>
-        Retake quiz
-      </button>
 
       <button
         type="button"
@@ -767,31 +767,31 @@ function PreviousResultScreen({ result, onRetake, onReset, resetting }) {
             <Button variant="ghost" fullWidth>Continue to colour quiz</Button>
           </Link>
 
+          <div className={styles.retakeBlock}>
+            <Button variant="ghost" fullWidth onClick={onRetake}>Retake quiz</Button>
+            <p className={styles.actionNote}>Adds a new result to your history</p>
+          </div>
+
           {confirmReset ? (
             <div className={styles.resetConfirm}>
               <p className={styles.resetConfirmText}>
-                Your quiz history will be preserved — this only clears your current active profile.
+                Resetting removes your current result so you can start this section fresh. Your previous results are never deleted.
               </p>
               <Button variant="destructive" fullWidth loading={resetting} onClick={onReset}>
-                Yes, reset my hair profile
+                Yes, reset this section
               </Button>
-              <button
-                type="button"
-                className={styles.textLink}
-                onClick={() => setConfirmReset(false)}
-              >
+              <button type="button" className={styles.textLink} onClick={() => setConfirmReset(false)}>
                 Cancel
               </button>
             </div>
           ) : (
-            <Button variant="ghost" fullWidth onClick={() => setConfirmReset(true)}>
-              Reset section
-            </Button>
+            <div className={styles.resetBlock}>
+              <button type="button" className={styles.textLink} onClick={() => setConfirmReset(true)}>
+                Reset this section
+              </button>
+              <p className={styles.actionNote}>Clears your current result, keeps your history</p>
+            </div>
           )}
-
-          <button type="button" className={styles.textLink} onClick={onRetake}>
-            Retake quiz
-          </button>
 
           <button
             type="button"

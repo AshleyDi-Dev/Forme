@@ -380,9 +380,105 @@ function ResultContent({ result }) {
   )
 }
 
+// ── Result actions ────────────────────────────────────────────────
+
+function ColorResultActions({ onSave, onRetake, onReset, saving, saved, resetting }) {
+  const [confirmReset, setConfirmReset] = useState(false)
+
+  return (
+    <div className={styles.resultActions}>
+      {saved ? (
+        <p className={styles.savedConfirmation} role="status">
+          <span aria-hidden="true">✓</span> Result saved
+        </p>
+      ) : (
+        <Button fullWidth loading={saving} onClick={onSave}>
+          Save result
+        </Button>
+      )}
+
+      <Link to="/profile" className={styles.fullWidth}>
+        <Button variant="ghost" fullWidth>Continue to profile</Button>
+      </Link>
+
+      <div className={styles.retakeBlock}>
+        <Button variant="ghost" fullWidth onClick={onRetake}>Retake quiz</Button>
+        <p className={styles.actionNote}>Adds a new result to your history</p>
+      </div>
+
+      {confirmReset ? (
+        <div className={styles.resetConfirm}>
+          <p className={styles.resetConfirmText}>
+            Resetting removes your current result so you can start this section fresh. Your previous results are never deleted.
+          </p>
+          <Button variant="destructive" fullWidth loading={resetting} onClick={onReset}>
+            Yes, reset this section
+          </Button>
+          <button type="button" className={styles.textLink} onClick={() => setConfirmReset(false)}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div className={styles.resetBlock}>
+          <button type="button" className={styles.textLink} onClick={() => setConfirmReset(true)}>
+            Reset this section
+          </button>
+          <p className={styles.actionNote}>Clears your current result, keeps your history</p>
+        </div>
+      )}
+
+      <Link to="/analyze" className={styles.textLink}>
+        Back to Analyze
+      </Link>
+    </div>
+  )
+}
+
+function ColorPreviousResultActions({ onRetake, onReset, resetting }) {
+  const [confirmReset, setConfirmReset] = useState(false)
+
+  return (
+    <div className={styles.resultActions}>
+      <Link to="/profile" className={styles.fullWidth}>
+        <Button variant="ghost" fullWidth>Continue to profile</Button>
+      </Link>
+
+      <div className={styles.retakeBlock}>
+        <Button variant="ghost" fullWidth onClick={onRetake}>Retake quiz</Button>
+        <p className={styles.actionNote}>Adds a new result to your history</p>
+      </div>
+
+      {confirmReset ? (
+        <div className={styles.resetConfirm}>
+          <p className={styles.resetConfirmText}>
+            Resetting removes your current result so you can start this section fresh. Your previous results are never deleted.
+          </p>
+          <Button variant="destructive" fullWidth loading={resetting} onClick={onReset}>
+            Yes, reset this section
+          </Button>
+          <button type="button" className={styles.textLink} onClick={() => setConfirmReset(false)}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div className={styles.resetBlock}>
+          <button type="button" className={styles.textLink} onClick={() => setConfirmReset(true)}>
+            Reset this section
+          </button>
+          <p className={styles.actionNote}>Clears your current result, keeps your history</p>
+        </div>
+      )}
+
+      <Link to="/analyze" className={styles.textLink}>
+        Back to Analyze
+      </Link>
+    </div>
+  )
+}
+
 // ── Result screen ─────────────────────────────────────────────────
 
-function ResultScreen({ season, onSave, onRetake, saving, saved, lowConfidence }) {
+function ResultScreen({ season, confidence, onSave, onRetake, onReset, saving, saved, resetting, lowConfidence }) {
   const result = RESULTS[season] ?? RESULTS.Summer
 
   return (
@@ -393,6 +489,7 @@ function ResultScreen({ season, onSave, onRetake, saving, saved, lowConfidence }
           <p className={styles.resultEyebrow}>Your color analysis</p>
           <h1 className={styles.resultLabel}>{result.heading}</h1>
           <p className={styles.resultSeasonLabel}>{result.seasonLabel}</p>
+          {confidence && <span className={styles.confidence}>{confidence}</span>}
         </div>
 
         <ResultContent result={result} />
@@ -403,26 +500,14 @@ function ResultScreen({ season, onSave, onRetake, saving, saved, lowConfidence }
           </p>
         )}
 
-        <div className={styles.resultActions}>
-          {saved ? (
-            <p className={styles.savedConfirmation} role="status">
-              <span aria-hidden="true">✓</span> Result saved
-            </p>
-          ) : (
-            <Button fullWidth loading={saving} onClick={onSave}>
-              Save result
-            </Button>
-          )}
-          <Button variant="ghost" fullWidth onClick={onRetake}>
-            Retake quiz
-          </Button>
-          <button type="button" className={styles.hairResetLink} onClick={onRetake}>
-            Changed your hair color? Retake this section to update your palette.
-          </button>
-          <Link to="/analyze" className={styles.textLink}>
-            Back to Analyze
-          </Link>
-        </div>
+        <ColorResultActions
+          onSave={onSave}
+          onRetake={onRetake}
+          onReset={onReset}
+          saving={saving}
+          saved={saved}
+          resetting={resetting}
+        />
 
         <UpgradeTeaser seasonLabel={result.seasonLabel} />
 
@@ -431,7 +516,7 @@ function ResultScreen({ season, onSave, onRetake, saving, saved, lowConfidence }
   )
 }
 
-function PreviousResultScreen({ season, onRetake }) {
+function PreviousResultScreen({ season, onRetake, onReset, resetting }) {
   const result = RESULTS[season] ?? RESULTS.Summer
 
   return (
@@ -446,17 +531,11 @@ function PreviousResultScreen({ season, onRetake }) {
 
         <ResultContent result={result} />
 
-        <div className={styles.resultActions}>
-          <Button variant="ghost" fullWidth onClick={onRetake}>
-            Retake quiz
-          </Button>
-          <button type="button" className={styles.hairResetLink} onClick={onRetake}>
-            Changed your hair color? Retake this section to update your palette.
-          </button>
-          <Link to="/analyze" className={styles.textLink}>
-            Back to Analyze
-          </Link>
-        </div>
+        <ColorPreviousResultActions
+          onRetake={onRetake}
+          onReset={onReset}
+          resetting={resetting}
+        />
 
         <UpgradeTeaser seasonLabel={result.seasonLabel} />
 
@@ -500,11 +579,12 @@ export default function ColorQuiz() {
   const [loading, setLoading]         = useState(true)
   const [quizStarted, setQuizStarted] = useState(false)
   const [savedResult, setSavedResult] = useState(null)
-  const [newResult, setNewResult]     = useState(null)
+  const [newResult, setNewResult]     = useState(null)  // { season, confidence }
   const [newAnswers, setNewAnswers]   = useState(null)
   const [skipPrev, setSkipPrev]       = useState(false)
   const [saving, setSaving]           = useState(false)
   const [saved, setSaved]             = useState(false)
+  const [resetting, setResetting]     = useState(false)
 
   useEffect(() => {
     async function load() {
@@ -521,31 +601,61 @@ export default function ColorQuiz() {
   }, [user.id])
 
   function handleComplete(answers) {
-    const season = calculateResult(answers)
+    const result = calculateResult(answers)  // returns { season, confidence }
     setNewAnswers(answers)
-    setNewResult(season)
+    setNewResult(result)
   }
 
   async function handleSave() {
     setSaving(true)
 
+    await supabase
+      .from('quiz_attempts')
+      .update({ is_current: false })
+      .eq('user_id', user.id)
+      .eq('quiz_type', 'color')
+      .eq('is_current', true)
+
     const { error: attemptError } = await supabase.from('quiz_attempts').insert({
       user_id:      user.id,
       quiz_type:    'color',
       answers_json: newAnswers,
-      result_json:  { season: newResult },
+      result_json:  { season: newResult.season, confidence: newResult.confidence },
       is_current:   true,
     })
-    if (attemptError) console.error('[ColorQuiz] quiz_attempts error:', attemptError)
+    if (attemptError) { console.error('[ColorQuiz] quiz_attempts error:', attemptError); setSaving(false); return }
 
     const { error: summaryError } = await supabase.from('style_summary').upsert(
-      { user_id: user.id, color_season: newResult },
+      { user_id: user.id, color_season: newResult.season },
       { onConflict: 'user_id' }
     )
     if (summaryError) console.error('[ColorQuiz] style_summary error:', summaryError)
 
     setSaving(false)
     setSaved(true)
+  }
+
+  async function handleReset() {
+    setResetting(true)
+
+    await supabase
+      .from('quiz_attempts')
+      .update({ is_current: false })
+      .eq('user_id', user.id)
+      .eq('quiz_type', 'color')
+
+    await supabase.from('style_summary').upsert(
+      { user_id: user.id, color_season: null },
+      { onConflict: 'user_id' }
+    )
+
+    setSavedResult(null)
+    setNewResult(null)
+    setNewAnswers(null)
+    setSaved(false)
+    setSkipPrev(false)
+    setQuizStarted(false)
+    setResetting(false)
   }
 
   function handleRetakeFromResult() {
@@ -560,11 +670,14 @@ export default function ColorQuiz() {
   if (newResult) {
     return (
       <ResultScreen
-        season={newResult}
+        season={newResult.season}
+        confidence={newResult.confidence}
         onSave={handleSave}
         onRetake={handleRetakeFromResult}
+        onReset={handleReset}
         saving={saving}
         saved={saved}
+        resetting={resetting}
         lowConfidence={newAnswers ? isLowConfidence(newAnswers) : false}
       />
     )
@@ -575,6 +688,8 @@ export default function ColorQuiz() {
       <PreviousResultScreen
         season={savedResult}
         onRetake={() => { setSkipPrev(true); setQuizStarted(false) }}
+        onReset={handleReset}
+        resetting={resetting}
       />
     )
   }
