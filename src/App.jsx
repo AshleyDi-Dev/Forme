@@ -18,6 +18,7 @@ import Profile      from './pages/Profile'
 import Style        from './pages/Style'
 import OutfitBuilder from './pages/OutfitBuilder'
 import Saved        from './pages/Saved'
+import ChoosePath   from './pages/ChoosePath'
 import Measurements from './pages/Measurements'
 import Tokens       from './pages/Tokens'
 
@@ -41,6 +42,7 @@ export default function App() {
           {/* Protected — redirect to /login if not authenticated */}
           <Route element={<ProtectedLayout />}>
             <Route path="/onboarding"          element={<Onboarding />} />
+            <Route path="/choose-path"         element={<ChoosePath />} />
             <Route path="/home"                element={<Home />} />
             <Route path="/analyze"             element={<AnalyzeHub />} />
             <Route path="/analyze/body"        element={<BodyQuiz />} />
