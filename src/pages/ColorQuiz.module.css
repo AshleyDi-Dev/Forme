@@ -208,7 +208,7 @@
   padding: 0;
 }
 
-.resetNote {
+.hairResetLink {
   font-size: var(--text-caption);
   color: var(--color-text-secondary);
   line-height: var(--line-height-body);
@@ -218,9 +218,11 @@
   cursor: pointer;
   font-family: var(--font-family);
   padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-.resetNote:hover {
+.hairResetLink:hover {
   color: var(--color-text-primary);
 }
 

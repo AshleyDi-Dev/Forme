@@ -405,7 +405,7 @@ function ResultScreen({ season, onSave, onRetake, saving, saved }) {
           <Button variant="ghost" fullWidth onClick={onRetake}>
             Retake quiz
           </Button>
-          <button type="button" className={styles.resetNote} onClick={onRetake}>
+          <button type="button" className={styles.hairResetLink} onClick={onRetake}>
             Changed your hair color? Retake this section to update your palette.
           </button>
           <Link to="/analyze" className={styles.textLink}>
@@ -439,7 +439,7 @@ function PreviousResultScreen({ season, onRetake }) {
           <Button variant="ghost" fullWidth onClick={onRetake}>
             Retake quiz
           </Button>
-          <button type="button" className={styles.resetNote} onClick={onRetake}>
+          <button type="button" className={styles.hairResetLink} onClick={onRetake}>
             Changed your hair color? Retake this section to update your palette.
           </button>
           <Link to="/analyze" className={styles.textLink}>
