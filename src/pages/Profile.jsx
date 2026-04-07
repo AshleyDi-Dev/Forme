@@ -190,6 +190,13 @@ export default function Profile() {
           ))}
         </div>
 
+        <Link
+          to="/measurements?from=profile"
+          className={styles.textLink}
+        >
+          Edit measurements
+        </Link>
+
         <Link to="/analyze" className={styles.textLink}>
           Back to Analyze
         </Link>
