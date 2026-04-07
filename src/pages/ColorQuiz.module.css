@@ -236,6 +236,19 @@
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-accent-muted);
+  opacity: 0.75;
+}
+
+.teaserLockRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.teaserLockIcon {
+  font-size: var(--text-label);
+  color: var(--color-text-tertiary, var(--color-text-secondary));
+  line-height: 1;
 }
 
 .teaserEyebrow {
@@ -243,14 +256,7 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
-  color: var(--color-accent);
-}
-
-.teaserHeading {
-  font-size: var(--text-body);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
-  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-secondary);
 }
 
 .teaserBody {
@@ -258,4 +264,22 @@
   color: var(--color-text-secondary);
   line-height: var(--line-height-body);
   margin-bottom: var(--space-xs);
+}
+
+.teaserPreview {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  filter: blur(3px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.teaserPreviewPill {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full, 999px);
+  padding: 2px var(--space-sm);
 }

@@ -331,14 +331,22 @@ function PaletteStrip({ colors }) {
 
 // ── Upgrade teaser ────────────────────────────────────────────────
 
-function UpgradeTeaser() {
+function UpgradeTeaser({ seasonLabel }) {
   return (
     <div className={styles.teaser}>
-      <p className={styles.teaserEyebrow}>Want to go deeper?</p>
+      <div className={styles.teaserLockRow}>
+        <span className={styles.teaserLockIcon} aria-hidden="true">⊘</span>
+        <p className={styles.teaserEyebrow}>Want to go deeper?</p>
+      </div>
       <p className={styles.teaserBody}>
         Your full 12-season analysis gives you a precise subtype — like{' '}
         <em>Soft Autumn</em> or <em>Deep Winter</em> — with a more tailored palette.
       </p>
+      <div className={styles.teaserPreview} aria-hidden="true">
+        <span className={styles.teaserPreviewPill}>Soft {seasonLabel?.replace(' palette', '')}</span>
+        <span className={styles.teaserPreviewPill}>True {seasonLabel?.replace(' palette', '')}</span>
+        <span className={styles.teaserPreviewPill}>Deep {seasonLabel?.replace(' palette', '')}</span>
+      </div>
       <Button variant="ghost" disabled>
         Coming soon
       </Button>
@@ -413,7 +421,7 @@ function ResultScreen({ season, onSave, onRetake, saving, saved }) {
           </Link>
         </div>
 
-        <UpgradeTeaser />
+        <UpgradeTeaser seasonLabel={result.seasonLabel} />
 
       </div>
     </div>
@@ -447,7 +455,7 @@ function PreviousResultScreen({ season, onRetake }) {
           </Link>
         </div>
 
-        <UpgradeTeaser />
+        <UpgradeTeaser seasonLabel={result.seasonLabel} />
 
       </div>
     </div>
