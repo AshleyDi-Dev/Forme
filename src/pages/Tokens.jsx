@@ -35,7 +35,7 @@ export default function Tokens() {
   return (
     <div style={{ padding: '40px 24px', maxWidth: '720px', margin: '0 auto' }}>
       <p style={{ fontSize: '12px', letterSpacing: '0.06em', color: 'var(--color-text-secondary)', marginBottom: '8px', textTransform: 'uppercase' }}>Design Tokens</p>
-      <h1 style={{ fontSize: 'var(--text-heading)', marginBottom: '48px' }}>GlowUp Token Preview</h1>
+      <h1 style={{ fontSize: 'var(--text-heading)', marginBottom: '48px' }}>Forme Token Preview</h1>
 
       {/* ── Colour ── */}
       <Section title="Colour">

@@ -7,7 +7,7 @@ export default function Welcome() {
     <div className={styles.page}>
       <div className={styles.container}>
 
-        <p className={styles.wordmark}>GlowUp</p>
+        <p className={styles.wordmark}>Forme</p>
 
         <div className={styles.hero}>
           <h1 className={styles.headline}>

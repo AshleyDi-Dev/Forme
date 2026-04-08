@@ -62,7 +62,7 @@ export default function Onboarding() {
       <div className={styles.container}>
 
         <div className={styles.header}>
-          <p className={styles.eyebrow}>GlowUp</p>
+          <p className={styles.eyebrow}>Forme</p>
           <h1 className={styles.heading}>Here's what you can do</h1>
         </div>
 
