@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedLayout from './components/ProtectedLayout'
 import PublicOnlyRoute from './components/PublicOnlyRoute'
-import NavBar from './components/NavBar'
 
 import Welcome      from './pages/Welcome'
 import Login        from './pages/Login'
@@ -26,9 +25,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div style={{ paddingBottom: '60px' }}>
-          <NavBar />
-          <Routes>
+        <Routes>
           {/* Public */}
           <Route path="/" element={<Welcome />} />
           <Route path="/tokens" element={<Tokens />} />
@@ -59,7 +56,6 @@ export default function App() {
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        </div>
       </BrowserRouter>
     </AuthProvider>
   )
