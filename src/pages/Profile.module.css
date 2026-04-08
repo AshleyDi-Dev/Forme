@@ -2,9 +2,6 @@
 
 .page {
   min-height: 100svh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
   padding: var(--space-xl) var(--space-md) var(--space-2xl);
   background: var(--color-bg);
 }
@@ -12,17 +9,19 @@
 .container {
   width: 100%;
   max-width: 480px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: var(--space-lg);
 }
 
-/* ── Header ──────────────────────────────────── */
+/* ── Page header ─────────────────────────────── */
 
 .header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
+  padding-bottom: var(--space-sm);
 }
 
 .eyebrow {
@@ -34,76 +33,132 @@
 }
 
 .heading {
-  font-size: var(--text-display);
+  font-size: var(--text-heading);
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-tight);
   line-height: var(--line-height-tight);
   color: var(--color-text-primary);
 }
 
-.body {
-  font-size: var(--text-body);
-  color: var(--color-text-secondary);
-  line-height: var(--line-height-body);
-}
+/* ── Section card ────────────────────────────── */
 
-/* ── Module list ─────────────────────────────── */
-
-.modules {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-/* ── Module card ─────────────────────────────── */
-
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  padding: var(--space-lg);
+.sectionCard {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-}
-
-.cardHeader {
+  padding: var(--space-lg);
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  flex-direction: column;
   gap: var(--space-md);
 }
 
-.cardLabel {
+.sectionEyebrow {
   font-size: var(--text-label);
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
   color: var(--color-text-secondary);
-  margin-bottom: 2px;
 }
 
-.cardResult {
+/* ── Empty state ─────────────────────────────── */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.emptyLabel {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
+.emptyAction {
+  text-decoration: none;
+  display: block;
+}
+
+/* ── Measurements grid ───────────────────────── */
+
+.measGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md) var(--space-lg);
+}
+
+.measCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.measLabel {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.measValue {
   font-size: var(--text-body);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
 }
 
-.cardEmpty {
-  font-size: var(--text-body);
+.measUpdated {
+  font-size: var(--text-label);
   color: var(--color-text-secondary);
+  margin-top: calc(-1 * var(--space-xs));
 }
 
-.completeBadge {
-  flex-shrink: 0;
-  font-size: var(--text-label);
+.editLink {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.editLink:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── Result content ──────────────────────────── */
+
+.resultTitle {
+  font-size: var(--text-subheading);
   font-weight: var(--font-weight-medium);
-  letter-spacing: var(--letter-spacing-wide);
-  text-transform: uppercase;
-  color: var(--color-accent);
-  background: var(--color-accent-muted);
-  padding: 2px var(--space-sm);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+
+.resultDesc {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
+}
+
+/* ── Color section ───────────────────────────── */
+
+.colorSeason {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  margin-top: calc(-1 * var(--space-sm));
+}
+
+.paletteRow {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
 }
 
 /* ── Card actions ────────────────────────────── */
@@ -112,38 +167,23 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  align-items: center;
+  padding-top: var(--space-xs);
 }
 
 .fullWidth {
   width: 100%;
+  display: block;
+  text-decoration: none;
 }
 
-/* ── Retake / reset blocks ───────────────────── */
-
-.retakeBlock {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  align-items: center;
-}
+/* ── Reset control ───────────────────────────── */
 
 .resetBlock {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  align-items: center;
-}
-
-.actionNote {
-  font-size: var(--text-label);
-  color: var(--color-text-secondary);
-  text-align: center;
+  justify-content: center;
 }
 
 .resetConfirm {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
@@ -161,7 +201,7 @@
   text-align: center;
 }
 
-/* ── Text links ──────────────────────────────── */
+/* ── Text link ───────────────────────────────── */
 
 .textLink {
   font-size: var(--text-caption);
@@ -172,8 +212,58 @@
   font-family: var(--font-family);
   padding: 0;
   text-align: center;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .textLink:hover {
   color: var(--color-text-primary);
+}
+
+/* ── Style snapshot card ─────────────────────── */
+
+.snapshotCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.bulletList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: 0;
+}
+
+.bullet {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
+  padding-left: var(--space-md);
+  position: relative;
+}
+
+.bullet::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-secondary);
+}
+
+.snapshotActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.comingSoon {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  padding: var(--space-xs) 0;
 }
