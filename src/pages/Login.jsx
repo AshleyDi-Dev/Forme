@@ -77,7 +77,7 @@ export default function Login() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <p className={styles.wordmark}>GlowUp</p>
+        <p className={styles.wordmark}>Forme</p>
 
         <Card padding="xl">
           <div className={styles.header}>

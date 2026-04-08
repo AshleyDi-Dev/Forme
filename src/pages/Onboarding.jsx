@@ -70,7 +70,7 @@ export default function Onboarding() {
       <div className={styles.container}>
 
         <div className={styles.pageHeader}>
-          <p className={styles.wordmark}>GlowUp</p>
+          <p className={styles.wordmark}>Forme</p>
           <h1 className={styles.heading}>Your style profile starts here.</h1>
         </div>
 

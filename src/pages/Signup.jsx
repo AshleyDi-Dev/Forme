@@ -129,7 +129,7 @@ export default function Signup() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <p className={styles.wordmark}>GlowUp</p>
+        <p className={styles.wordmark}>Forme</p>
 
         {submitted ? (
           <ConfirmationView email={submittedEmail} onTryAgain={handleTryAgain} />
