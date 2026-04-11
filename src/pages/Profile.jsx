@@ -447,7 +447,7 @@ export default function Profile() {
 
   useEffect(() => {
     async function load() {
-      const [{ data: sumData }, { data: measData }] = await Promise.all([
+      const [sumResult, measResult] = await Promise.all([
         supabase
           .from('style_summary')
           .select('body_type, face_shape, hair_texture, hair_density, hair_porosity, color_season')
@@ -455,12 +455,17 @@ export default function Profile() {
           .maybeSingle(),
         supabase
           .from('measurements')
-          .select('height, bust, waist, hips, unit, updated_at, created_at')
+          .select('*')
           .eq('user_id', user.id)
           .maybeSingle(),
       ])
-      setSummary(sumData ?? {})
-      setMeasurements(measData)
+
+      if (sumResult.error) console.error('[Profile] style_summary fetch error:', sumResult.error)
+      if (measResult.error) console.error('[Profile] measurements fetch error:', measResult.error)
+      console.log('[Profile] measurements fetch result:', measResult)
+
+      setSummary(sumResult.data ?? {})
+      setMeasurements(measResult.data)
       setLoading(false)
     }
     load()
