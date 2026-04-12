@@ -285,9 +285,8 @@ export default function Home() {
           <p className={styles.cardEyebrow}>Quick actions</p>
           <div className={styles.actionRow}>
             {[
-              { label: 'Build an outfit',      path: '/style/outfit-builder' },
-              { label: 'View recommendations', path: '/style'                },
-              { label: 'Saved items',          path: '/saved'                },
+              { label: 'Build an outfit', path: '/style/outfit-builder' },
+              { label: 'Saved items',     path: '/saved'                },
             ].map(({ label, path }) => (
               <button
                 key={path}
@@ -299,6 +298,9 @@ export default function Home() {
                 <span className={styles.comingTag}>Soon</span>
               </button>
             ))}
+            <Link to="/style" className={styles.actionBtn}>
+              <span className={styles.actionLabel}>View recommendations</span>
+            </Link>
           </div>
           {comingSoon && (
             <p className={styles.comingSoonNote} role="status">Coming soon</p>
