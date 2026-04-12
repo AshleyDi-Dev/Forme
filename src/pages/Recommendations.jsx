@@ -271,9 +271,9 @@ export default function Recommendations() {
           </p>
         </div>
 
-        <ClothingSection  clothing={recommendations?.clothing    ?? null} />
-        <ColourSection    color={recommendations?.color          ?? null} />
-        <HairSection      hair={recommendations?.hair            ?? null} />
+        <ClothingSection  clothing={recommendations?.clothing        ?? null} />
+        <ColourSection    color={recommendations?.color              ?? null} />
+        <HairSection      hair={recommendations?.hair                ?? null} />
         <AccessoriesSection accessories={recommendations?.accessories ?? null} />
 
       </div>
