@@ -719,7 +719,6 @@ function PreviousResultScreen({ result, onRetake, onReset, resetting }) {
 
           <div className={styles.retakeBlock}>
             <Button variant="ghost" fullWidth onClick={onRetake}>Retake quiz</Button>
-            <p className={styles.actionNote}>Adds a new result to your history</p>
           </div>
 
           {confirmReset ? (
@@ -739,7 +738,6 @@ function PreviousResultScreen({ result, onRetake, onReset, resetting }) {
               <button type="button" className={styles.textLink} onClick={() => setConfirmReset(true)}>
                 Reset this section
               </button>
-              <p className={styles.actionNote}>Clears your current result, keeps your history</p>
             </div>
           )}
 
