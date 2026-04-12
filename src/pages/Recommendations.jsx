@@ -1,6 +1,30 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRecommendations } from '../hooks/useRecommendations'
 import styles from './Recommendations.module.css'
+
+// ── Chevron icon ──────────────────────────────────────────────────
+
+function Chevron({ open }) {
+  return (
+    <svg
+      className={`${styles.cardChevron} ${open ? styles.cardChevronOpen : ''}`}
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 6l4 4 4-4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
 
 // ── Shared primitives ─────────────────────────────────────────────
 
@@ -39,18 +63,6 @@ function AvoidBlock({ items }) {
   )
 }
 
-function Card({ eyebrow, title, children }) {
-  return (
-    <div className={styles.section}>
-      <div className={styles.sectionHead}>
-        {eyebrow && <p className={styles.sectionEyebrow}>{eyebrow}</p>}
-        <h2 className={styles.sectionTitle}>{title}</h2>
-      </div>
-      {children}
-    </div>
-  )
-}
-
 function EmptyState({ message, quizPath, quizLabel }) {
   return (
     <div className={styles.emptySection}>
@@ -60,37 +72,59 @@ function EmptyState({ message, quizPath, quizLabel }) {
   )
 }
 
+// ── Accordion card ────────────────────────────────────────────────
+
+function Card({ eyebrow, title, children }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className={styles.section}>
+      <button
+        className={`${styles.cardHeader} ${open ? styles.cardHeaderOpen : ''}`}
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+      >
+        <div className={styles.cardHeaderText}>
+          {eyebrow && <p className={styles.sectionEyebrow}>{eyebrow}</p>}
+          <span className={styles.sectionTitle}>{title}</span>
+        </div>
+        <Chevron open={open} />
+      </button>
+      {open && (
+        <div className={styles.cardBody}>
+          {children}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── Garment cards ─────────────────────────────────────────────────
 
 const GARMENT_NULL_MSG = 'Complete the body proportions quiz to unlock this category.'
 
 function GarmentCard({ label, data }) {
-  if (!data) {
-    return (
-      <Card eyebrow="Clothing" title={label}>
-        <EmptyState message={GARMENT_NULL_MSG} quizPath="/analyze/body" quizLabel="Take the body quiz" />
-      </Card>
-    )
-  }
   return (
     <Card eyebrow="Clothing" title={label}>
-      <ChipRow items={data.whatWorks} />
-      <AvoidBlock items={data.avoid} />
+      {data ? (
+        <>
+          <ChipRow items={data.whatWorks} />
+          <AvoidBlock items={data.avoid} />
+        </>
+      ) : (
+        <EmptyState message={GARMENT_NULL_MSG} quizPath="/analyze/body" quizLabel="Take the body quiz" />
+      )}
     </Card>
   )
 }
 
 function NecklinesCard({ necklines }) {
-  if (!necklines) {
-    return (
-      <Card eyebrow="Clothing" title="Necklines">
-        <EmptyState message={GARMENT_NULL_MSG} quizPath="/analyze/body" quizLabel="Take the body quiz" />
-      </Card>
-    )
-  }
   return (
     <Card eyebrow="Clothing" title="Necklines">
-      <ChipRow items={necklines} />
+      {necklines ? (
+        <ChipRow items={necklines} />
+      ) : (
+        <EmptyState message={GARMENT_NULL_MSG} quizPath="/analyze/body" quizLabel="Take the body quiz" />
+      )}
     </Card>
   )
 }
@@ -98,23 +132,67 @@ function NecklinesCard({ necklines }) {
 // ── Haircuts card ─────────────────────────────────────────────────
 
 function HaircutsCard({ haircuts }) {
-  if (!haircuts) {
-    return (
-      <Card eyebrow="Hair" title="Haircuts">
+  return (
+    <Card eyebrow="Hair" title="Haircuts">
+      {haircuts ? (
+        <>
+          <ChipRow items={haircuts.whatWorks} />
+          <AvoidBlock items={haircuts.avoid} />
+          {haircuts.textureNote && (
+            <p className={styles.patternNote}>{haircuts.textureNote}</p>
+          )}
+        </>
+      ) : (
         <EmptyState
           message="Complete the face shape quiz to unlock haircut recommendations."
           quizPath="/analyze/face"
           quizLabel="Take the face quiz"
         />
-      </Card>
-    )
-  }
+      )}
+    </Card>
+  )
+}
+
+// ── Hair info card ────────────────────────────────────────────────
+
+function HairSubsection({ title, data }) {
+  if (!data) return null
   return (
-    <Card eyebrow="Hair" title="Haircuts">
-      <ChipRow items={haircuts.whatWorks} />
-      <AvoidBlock items={haircuts.avoid} />
-      {haircuts.textureNote && (
-        <p className={styles.patternNote}>{haircuts.textureNote}</p>
+    <div className={styles.hairSubsection}>
+      <p className={styles.subsectionTitle}>{title}</p>
+      <p className={styles.whyText}>{data.why}</p>
+      <ChipRow items={data.whatWorks} />
+      <LabelledChips label="Product types to look for" items={data.productTypes} />
+      {data.routineNote && (
+        <p className={styles.patternNote}>{data.routineNote}</p>
+      )}
+      <AvoidBlock items={data.avoid} />
+    </div>
+  )
+}
+
+function HairInfoCard({ hair }) {
+  const subsections = [
+    { key: 'texture',  title: 'Texture',  data: hair?.texture },
+    { key: 'density',  title: 'Density',  data: hair?.density },
+    { key: 'porosity', title: 'Porosity', data: hair?.porosity },
+  ].filter(s => s.data)
+
+  return (
+    <Card eyebrow="Hair" title="Hair info">
+      {subsections.length > 0 ? (
+        subsections.map((s, i) => (
+          <div key={s.key}>
+            {i > 0 && <div className={styles.subsectionDivider} />}
+            <HairSubsection title={s.title} data={s.data} />
+          </div>
+        ))
+      ) : (
+        <EmptyState
+          message="Complete the hair quiz to unlock personalised hair recommendations."
+          quizPath="/analyze/hair"
+          quizLabel="Take the hair quiz"
+        />
       )}
     </Card>
   )
@@ -123,44 +201,39 @@ function HaircutsCard({ haircuts }) {
 // ── Accessories card ──────────────────────────────────────────────
 
 function AccessoriesCard({ accessories }) {
-  if (!accessories) {
-    return (
-      <Card eyebrow="Accessories" title="Finishing touches">
+  return (
+    <Card eyebrow="Accessories" title="Finishing touches">
+      {accessories ? (
+        <>
+          <p className={styles.whyText}>{accessories.why}</p>
+          <div className={styles.group}>
+            <p className={styles.groupLabel}>Earrings</p>
+            <ChipRow items={accessories.earrings} />
+            {accessories.earringsAvoid?.length > 0 && (
+              <div className={styles.avoidInline}>
+                {accessories.earringsAvoid.map((item, i) => (
+                  <p key={i} className={styles.avoidInlineText}>{item}</p>
+                ))}
+              </div>
+            )}
+          </div>
+          <LabelledChips label="Necklace length" items={accessories.necklaceLength} />
+          <div className={styles.group}>
+            <p className={styles.groupLabel}>Glasses frames</p>
+            <ChipRow items={accessories.glassesFrames} />
+            {accessories.glassesAvoid && (
+              <p className={styles.avoidInlineText}>{accessories.glassesAvoid}</p>
+            )}
+          </div>
+          <LabelledChips label="Hat styles" items={accessories.hatStyles} />
+        </>
+      ) : (
         <EmptyState
           message="Complete the face shape quiz to unlock accessory recommendations."
           quizPath="/analyze/face"
           quizLabel="Take the face quiz"
         />
-      </Card>
-    )
-  }
-  return (
-    <Card eyebrow="Accessories" title="Finishing touches">
-      <p className={styles.whyText}>{accessories.why}</p>
-
-      <div className={styles.group}>
-        <p className={styles.groupLabel}>Earrings</p>
-        <ChipRow items={accessories.earrings} />
-        {accessories.earringsAvoid?.length > 0 && (
-          <div className={styles.avoidInline}>
-            {accessories.earringsAvoid.map((item, i) => (
-              <p key={i} className={styles.avoidInlineText}>{item}</p>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <LabelledChips label="Necklace length" items={accessories.necklaceLength} />
-
-      <div className={styles.group}>
-        <p className={styles.groupLabel}>Glasses frames</p>
-        <ChipRow items={accessories.glassesFrames} />
-        {accessories.glassesAvoid && (
-          <p className={styles.avoidInlineText}>{accessories.glassesAvoid}</p>
-        )}
-      </div>
-
-      <LabelledChips label="Hat styles" items={accessories.hatStyles} />
+      )}
     </Card>
   )
 }
@@ -188,86 +261,34 @@ function SwatchGrid({ swatches, small = false }) {
 }
 
 function ColourCard({ color }) {
-  if (!color) {
-    return (
-      <Card eyebrow="Colour" title="Your palette">
+  return (
+    <Card eyebrow="Colour" title="Your palette">
+      {color ? (
+        <>
+          <p className={styles.whyText}>{color.why}</p>
+          <SwatchGrid swatches={color.paletteHero} />
+          <div className={styles.group}>
+            <p className={styles.groupLabel}>Your neutrals</p>
+            <SwatchGrid swatches={color.neutrals} small />
+          </div>
+          {color.patternGuidance && (
+            <p className={styles.patternNote}>{color.patternGuidance}</p>
+          )}
+          <LabelledChips label="Metals" items={color.metals} />
+          <AvoidBlock items={color.avoid} />
+          {color.upgradeTeaser && (
+            <div className={styles.teaser}>
+              <p className={styles.teaserText}>{color.upgradeTeaser}</p>
+            </div>
+          )}
+        </>
+      ) : (
         <EmptyState
           message="Complete the colour analysis quiz to unlock your personal palette."
           quizPath="/analyze/color"
           quizLabel="Take the colour quiz"
         />
-      </Card>
-    )
-  }
-  return (
-    <Card eyebrow="Colour" title="Your palette">
-      <p className={styles.whyText}>{color.why}</p>
-      <SwatchGrid swatches={color.paletteHero} />
-      <div className={styles.group}>
-        <p className={styles.groupLabel}>Your neutrals</p>
-        <SwatchGrid swatches={color.neutrals} small />
-      </div>
-      {color.patternGuidance && (
-        <p className={styles.patternNote}>{color.patternGuidance}</p>
       )}
-      <LabelledChips label="Metals" items={color.metals} />
-      <AvoidBlock items={color.avoid} />
-      {color.upgradeTeaser && (
-        <div className={styles.teaser}>
-          <p className={styles.teaserText}>{color.upgradeTeaser}</p>
-        </div>
-      )}
-    </Card>
-  )
-}
-
-// ── Hair info card ────────────────────────────────────────────────
-
-function HairSubsection({ title, data }) {
-  if (!data) return null
-  return (
-    <div className={styles.hairSubsection}>
-      <p className={styles.subsectionTitle}>{title}</p>
-      <p className={styles.whyText}>{data.why}</p>
-      <ChipRow items={data.whatWorks} />
-      <LabelledChips label="Product types to look for" items={data.productTypes} />
-      {data.routineNote && (
-        <p className={styles.patternNote}>{data.routineNote}</p>
-      )}
-      <AvoidBlock items={data.avoid} />
-    </div>
-  )
-}
-
-function HairInfoCard({ hair }) {
-  const hasAny = hair && (hair.texture || hair.density || hair.porosity)
-
-  if (!hasAny) {
-    return (
-      <Card eyebrow="Hair" title="Hair info">
-        <EmptyState
-          message="Complete the hair quiz to unlock personalised hair recommendations."
-          quizPath="/analyze/hair"
-          quizLabel="Take the hair quiz"
-        />
-      </Card>
-    )
-  }
-
-  const subsections = [
-    { key: 'texture',  title: 'Texture',  data: hair.texture },
-    { key: 'density',  title: 'Density',  data: hair.density },
-    { key: 'porosity', title: 'Porosity', data: hair.porosity },
-  ].filter(s => s.data)
-
-  return (
-    <Card eyebrow="Hair" title="Hair info">
-      {subsections.map((s, i) => (
-        <div key={s.key}>
-          {i > 0 && <div className={styles.subsectionDivider} />}
-          <HairSubsection title={s.title} data={s.data} />
-        </div>
-      ))}
     </Card>
   )
 }
@@ -305,27 +326,46 @@ export default function Recommendations() {
           </p>
         </div>
 
-        {/* ── Clothing ── */}
-        <GarmentCard  label="Tops"      data={garments?.tops}      />
-        <GarmentCard  label="Jackets"   data={garments?.jackets}   />
-        <GarmentCard  label="Bottoms"   data={garments?.bottoms}   />
-        <GarmentCard  label="Dresses"   data={garments?.dresses}   />
-        <GarmentCard  label="Skirts"    data={garments?.skirts}    />
-        <GarmentCard  label="Outerwear" data={garments?.outerwear} />
-        <NecklinesCard necklines={garments?.necklines} />
+        {/* ── Group 1: Clothing ── */}
+        <div className={styles.groupSection}>
+          <h2 className={styles.groupHeading}>Clothing</h2>
+          <div className={styles.cardGrid}>
+            <GarmentCard  label="Tops"      data={garments?.tops}      />
+            <GarmentCard  label="Jackets"   data={garments?.jackets}   />
+            <GarmentCard  label="Bottoms"   data={garments?.bottoms}   />
+            <GarmentCard  label="Dresses"   data={garments?.dresses}   />
+            <GarmentCard  label="Skirts"    data={garments?.skirts}    />
+            <GarmentCard  label="Outerwear" data={garments?.outerwear} />
+            <NecklinesCard necklines={garments?.necklines} />
+          </div>
+        </div>
 
-        {/* ── Face-based ── */}
-        <HaircutsCard    haircuts={haircuts}       />
-        <AccessoriesCard accessories={accessories} />
+        {/* ── Group 2: Hair & Accessories ── */}
+        <div className={styles.groupSection}>
+          <h2 className={styles.groupHeading}>Hair &amp; Accessories</h2>
+          <div className={styles.cardGrid}>
+            <HaircutsCard    haircuts={haircuts}       />
+            <HairInfoCard    hair={hair}               />
+            <AccessoriesCard accessories={accessories} />
+          </div>
+        </div>
 
-        {/* ── Colour ── */}
-        <ColourCard color={color} />
+        {/* ── Group 3: Colour ── */}
+        <div className={styles.groupSection}>
+          <h2 className={styles.groupHeading}>Colour</h2>
+          <div className={styles.cardGrid}>
+            <ColourCard color={color} />
+          </div>
+        </div>
 
-        {/* ── Hair info ── */}
-        <HairInfoCard hair={hair} />
-
-        {/* Prints — coming soon */}
-        {/* Glow-up — coming soon */}
+        {/* ── Coming soon ── */}
+        <div className={styles.comingSoonCard}>
+          <p className={styles.comingSoonEyebrow}>Coming soon</p>
+          <p className={styles.comingSoonTitle}>Your glow-up plan</p>
+          <p className={styles.comingSoonBody}>
+            Your best options across clothing, colour, and hair — all in one place.
+          </p>
+        </div>
 
       </div>
     </div>

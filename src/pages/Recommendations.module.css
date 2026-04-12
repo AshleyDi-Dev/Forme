@@ -8,11 +8,11 @@
 
 .container {
   width: 100%;
-  max-width: 480px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-xl);
 }
 
 /* ── Page header ─────────────────────────────── */
@@ -46,26 +46,98 @@
   line-height: var(--line-height-body);
 }
 
-/* ── Section card ────────────────────────────── */
+/* ── Group sections ──────────────────────────── */
+
+.groupSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.groupHeading {
+  font-size: var(--text-subheading);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+
+/* ── Card grid ───────────────────────────────── */
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  align-items: stretch;
+}
+
+@media (min-width: 1024px) {
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Section card (accordion) ────────────────── */
 
 .section {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-lg);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
 
-.sectionHead {
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  font-family: var(--font-family);
+  text-align: left;
+  width: 100%;
+  transition: background 120ms ease;
+}
+
+.cardHeader:hover {
+  background: var(--color-bg);
+}
+
+.cardHeaderOpen {
+  border-bottom-color: var(--color-border);
+}
+
+.cardHeaderText {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding-bottom: var(--space-md);
-  border-bottom: 1px solid var(--color-border);
+  min-width: 0;
 }
+
+.cardChevron {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  transition: transform 200ms ease;
+}
+
+.cardChevronOpen {
+  transform: rotate(180deg);
+}
+
+.cardBody {
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ── Card text elements ──────────────────────── */
 
 .sectionEyebrow {
   font-size: var(--text-label);
@@ -299,6 +371,42 @@
 
 .emptyLink:hover {
   opacity: 0.75;
+}
+
+/* ── Coming soon card ────────────────────────── */
+
+.comingSoonCard {
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.comingSoonEyebrow {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+.comingSoonTitle {
+  font-size: var(--text-subheading);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-secondary);
+}
+
+.comingSoonBody {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
+  opacity: 0.7;
 }
 
 /* ── Error ───────────────────────────────────── */
