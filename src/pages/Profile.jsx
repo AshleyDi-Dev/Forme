@@ -528,7 +528,9 @@ export default function Profile() {
 
         {buildSummaryBullets(summary).length >= 2 && (
           <div className={styles.actionsBar}>
-            <Button fullWidth onClick={showHint}>View recommendations</Button>
+            <Link to="/style" className={styles.fullWidth}>
+              <Button fullWidth>View recommendations</Button>
+            </Link>
             <Button variant="ghost" fullWidth onClick={showHint}>Build an outfit</Button>
             <Button variant="ghost" fullWidth onClick={showHint}>Save wardrobe notes</Button>
             {hint && <p className={styles.comingSoon} role="status">{hint}</p>}
