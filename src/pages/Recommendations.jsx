@@ -62,10 +62,32 @@ function EmptySection({ message, quizPath, quizLabel }) {
 
 // ── Clothing section ──────────────────────────────────────────────
 
+const GARMENT_LABELS = {
+  tops:      'Tops',
+  jackets:   'Jackets',
+  bottoms:   'Bottoms',
+  dresses:   'Dresses',
+  skirts:    'Skirts',
+  outerwear: 'Outerwear',
+}
+
+const GARMENT_ORDER = ['tops', 'jackets', 'bottoms', 'dresses', 'skirts', 'outerwear']
+
+function GarmentSubsection({ title, data }) {
+  if (!data) return null
+  return (
+    <div className={styles.hairSubsection}>
+      <p className={styles.subsectionTitle}>{title}</p>
+      <ChipRow items={data.whatWorks} />
+      <AvoidBlock items={data.avoid} />
+    </div>
+  )
+}
+
 function ClothingSection({ clothing }) {
   if (!clothing) {
     return (
-      <SectionCard eyebrow="Clothing" title="Silhouettes & cuts">
+      <SectionCard eyebrow="Clothing" title="Clothing & silhouettes">
         <EmptySection
           message="Complete the body proportions quiz to unlock clothing recommendations."
           quizPath="/analyze/body"
@@ -75,13 +97,17 @@ function ClothingSection({ clothing }) {
     )
   }
 
+  const subsections = GARMENT_ORDER.filter(key => clothing[key])
+
   return (
-    <SectionCard eyebrow="Clothing" title="Silhouettes & cuts">
-      <p className={styles.whyText}>{clothing.why}</p>
-      <ChipRow items={clothing.whatWorks} />
+    <SectionCard eyebrow="Clothing" title="Clothing & silhouettes">
+      {subsections.map((key, i) => (
+        <div key={key}>
+          {i > 0 && <div className={styles.subsectionDivider} />}
+          <GarmentSubsection title={GARMENT_LABELS[key]} data={clothing[key]} />
+        </div>
+      ))}
       <LabelledChips label="Necklines that tend to suit" items={clothing.necklines} />
-      <LabelledChips label="Silhouettes to explore" items={clothing.silhouettes} />
-      <AvoidBlock items={clothing.avoid} />
     </SectionCard>
   )
 }

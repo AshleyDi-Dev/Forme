@@ -9,7 +9,9 @@
 // Any missing or unrecognised field returns null for that category rather
 // than throwing, so it is safe to call with a partially complete summary.
 
-import { clothingRules, colorRules, accessoryRules, hairRules } from './recommendations'
+import { garmentRules, colorRules, accessoryRules, hairRules } from './recommendations'
+
+const GARMENT_CATEGORIES = ['tops', 'jackets', 'bottoms', 'dresses', 'skirts', 'outerwear']
 
 export function getRecommendations(styleSummary = {}) {
   const {
@@ -22,15 +24,17 @@ export function getRecommendations(styleSummary = {}) {
   } = styleSummary
 
   // ── Clothing ────────────────────────────────────────────────────
-  // Base rule comes from body_type. If a face modifier exists for this
-  // face_shape + body_type combination, override only the necklines field.
+  // Each garment category is keyed by body_type. Necklines use the
+  // body_type base, with face_shape applied as a modifier where one exists.
   let clothing = null
-  const baseClothing = clothingRules.bodyTypes?.[body_type]
-  if (baseClothing) {
-    const faceOverride = clothingRules.faceModifiers?.[face_shape]?.[body_type]
-    clothing = faceOverride
-      ? { ...baseClothing, necklines: faceOverride.necklines }
-      : { ...baseClothing }
+  if (body_type) {
+    const faceOverride = garmentRules.necklineFaceModifiers?.[face_shape]?.[body_type]
+    const necklines = faceOverride?.necklines ?? garmentRules.necklines?.[body_type] ?? null
+
+    clothing = { necklines }
+    for (const cat of GARMENT_CATEGORIES) {
+      clothing[cat] = garmentRules[cat]?.[body_type] ?? null
+    }
   }
 
   // ── Colour ──────────────────────────────────────────────────────

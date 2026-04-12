@@ -1,205 +1,471 @@
-// Clothing silhouette rules for Forme's recommendations engine.
+// Garment-specific clothing rules for Forme's recommendations engine.
 // Sourced from: style_summary.body_type and style_summary.face_shape
 //
-// Body type is the primary rule. Face shape is a modifier that overrides
-// the necklines field only — it does not create a full separate rule.
-// faceModifiers only includes entries where guidance genuinely differs
-// from the body-type base.
+// Each garment category is keyed by body type: { whatWorks, avoid }.
+// Necklines use body type as the base; face shape modifiers are applied
+// at engine time via necklineFaceModifiers — only where guidance
+// genuinely conflicts with the body-type base.
 
-export const clothingRules = {
+export const garmentRules = {
 
-  bodyTypes: {
+  // ── Tops ──────────────────────────────────────────────────────────
+
+  tops: {
 
     Hourglass: {
       whatWorks: [
-        'Wrap styles and belted silhouettes',
-        'Fitted cuts that follow your shape',
-        'Stretchy or draped fabrics that move with you',
-        'High-waisted bottoms with tucked-in tops',
+        'Fitted or semi-fitted styles',
+        'Wrap tops',
+        'Tucked-in blouses',
+        'Ribbed knits',
       ],
-      why: 'Your shoulders and hips tend to be close in width with a naturally defined waist, so styles that follow your shape rather than obscure it often feel most balanced and intentional.',
       avoid: [
-        'Very boxy or shapeless cuts',
-        'Stiff fabrics that sit away from the body',
-        'Extremely voluminous skirts that can overwhelm your proportions',
+        'Extremely oversized or boxy tops that obscure the waist',
       ],
-      necklines: ['V-neck', 'Sweetheart', 'Scoop neck'],
-      silhouettes: ['Wrap dress', 'Fit-and-flare', 'Belted midi'],
-      toneNote: 'Celebrate what\'s already there — this isn\'t about making the waist smaller, it\'s about working with a silhouette that naturally reads as balanced.',
     },
 
     Pear: {
       whatWorks: [
-        'Structured or embellished tops that draw the eye upward',
-        'A-line and flared skirts',
-        'Wide-leg and straight-leg trousers',
-        'Statement sleeves and interesting necklines',
+        'Structured or embellished tops',
+        'Bardot, off-shoulder, and boat neck',
+        'Puff sleeves',
+        'Statement necklines',
       ],
-      why: 'Your hips tend to be the fullest part of your frame — styles that add visual interest or structure above the waist can feel particularly balanced and intentional.',
       avoid: [
-        'Tapered or skinny trousers that can emphasise the hip line',
-        'Very heavy fabric concentrated below the waist',
-        'Pencil skirts with no volume at the hem',
+        'Thin spaghetti straps with no structure',
+        'Very plain fitted tops with no interest above the waist',
       ],
-      necklines: ['Boat neck', 'Off-shoulder', 'Square neck'],
-      silhouettes: ['A-line skirt', 'Wide-leg trouser', 'Empire waist dress'],
-      toneNote: 'Frame this entirely as adding interest and energy above — never as reducing or balancing out below.',
     },
 
     Apple: {
       whatWorks: [
-        'Empire and high-waist cuts that flow from above the fullest point',
-        'Wrap styles with a defined tie',
-        'Monochromatic dressing from top to toe',
-        'Structured shoulders that create a strong upper frame',
+        'Wrap tops',
+        'V-neck blouses',
+        'Floaty or draped fabric',
+        'Empire-line tops',
+        'Longline styles',
       ],
-      why: 'Your frame tends to carry more volume through the midsection — elongating cuts and a strong shoulder line often create a streamlined, confident silhouette.',
       avoid: [
-        'Clingy fabrics across the midsection',
-        'Cropped jackets that end at the widest point',
-        'Very high-waisted bottoms that can cut across the midsection uncomfortably',
+        'Cropped tops',
+        'Very fitted styles across the midsection',
+        'Horizontal stripes across the torso',
       ],
-      necklines: ['V-neck', 'Deep scoop', 'Wrap'],
-      silhouettes: ['Empire waist dress', 'Wrap dress', 'Shift dress'],
-      toneNote: 'Emphasise elongation, ease, and confidence. The goal is a look that feels effortless and intentional, not one that appears to be working hard.',
     },
 
     Rectangle: {
       whatWorks: [
-        'Belted and waist-defining styles',
-        'Peplum and ruffle details that add movement',
-        'High-waisted bottoms paired with tucked or cropped tops',
-        'Layering to create visual depth',
+        'Peplum tops',
+        'Ruffled or textured blouses',
+        'Wrap tops',
+        'Cropped styles with high-waisted bottoms',
       ],
-      why: 'Your shoulders, waist, and hips tend to sit close in width — styles that introduce movement, texture, or a defined waist tend to add dimension and interest to your silhouette.',
       avoid: [
-        'Extremely oversized pieces with no waist definition at all',
-        'Very straight cuts in stiff fabric that read as flat',
-        'Styles that cut horizontally at the widest point with no structure above or below',
+        'Very straight boxy styles with no shape or detail',
       ],
-      necklines: ['Square neck', 'V-neck', 'Scoop neck'],
-      silhouettes: ['Peplum top', 'Belted wrap dress', 'A-line skirt'],
-      toneNote: 'Frame this as creating shape and dimension, not adding curves. The goal is movement and interest, not a different body.',
     },
 
     'Inverted Triangle': {
       whatWorks: [
-        'Wide-leg and flared trousers',
-        'Full and A-line skirts',
-        'Softer shoulder lines — raglan, dolman, or off-shoulder',
-        'Details concentrated below the waist',
+        'Soft draped tops',
+        'V-necks',
+        'Dolman and raglan sleeves',
+        'Simple fitted styles with no shoulder detail',
       ],
-      why: 'Your shoulders tend to be your widest point — styles that introduce volume below the waist and soften the shoulder line often feel most balanced and naturally proportioned.',
       avoid: [
-        'Strong shoulder details like padding or cap sleeves',
-        'Strapless and halter styles that keep all the focus at the shoulders',
-        'Very tapered hems that contrast sharply with the upper body',
+        'Structured shoulders',
+        'Cap sleeves',
+        'Halter necks',
+        'Heavy embellishment at the shoulders',
       ],
-      necklines: ['V-neck', 'Deep scoop', 'U-neck'],
-      silhouettes: ['Wide-leg trouser', 'A-line skirt', 'Flared midi skirt'],
-      toneNote: 'Treat lower volume as elegant and intentional — this is about proportion, not disguise.',
     },
 
   },
 
-  // ── Face shape neckline overrides ──────────────────────────────────
-  // Only included where the face-shape guidance genuinely conflicts with
+  // ── Jackets ───────────────────────────────────────────────────────
+
+  jackets: {
+
+    Hourglass: {
+      whatWorks: [
+        'Fitted blazers',
+        'Belted jackets',
+        'Tailored cuts that follow the waist',
+      ],
+      avoid: [
+        'Boxy oversized blazers that hide the waist entirely',
+      ],
+    },
+
+    Pear: {
+      whatWorks: [
+        'Structured blazers that end at the hip or above',
+        'Cropped jackets',
+        'Strong-shouldered styles',
+      ],
+      avoid: [
+        'Jackets that flare or add volume at the hip',
+        'Very long jackets that end at the widest point',
+      ],
+    },
+
+    Apple: {
+      whatWorks: [
+        'Longline blazers',
+        'Open-front styles',
+        'Structured shoulders',
+        'Single-button jackets',
+      ],
+      avoid: [
+        'Cropped jackets that end at the waist',
+        'Very fitted styles across the midsection',
+      ],
+    },
+
+    Rectangle: {
+      whatWorks: [
+        'Belted or cinched jackets',
+        'Textured or bouclé styles',
+        'Double-breasted for structure',
+      ],
+      avoid: [
+        'Completely shapeless unstructured styles',
+      ],
+    },
+
+    'Inverted Triangle': {
+      whatWorks: [
+        'Hip-length or longer jackets',
+        'Softer unstructured blazers',
+        'No-shoulder-pad styles',
+      ],
+      avoid: [
+        'Strongly padded shoulders',
+        'Cropped jackets that emphasise the upper body',
+      ],
+    },
+
+  },
+
+  // ── Bottoms ───────────────────────────────────────────────────────
+
+  bottoms: {
+
+    Hourglass: {
+      whatWorks: [
+        'High-waisted trousers',
+        'Straight-leg and wide-leg jeans',
+        'Fitted skirts',
+        'Tailored shorts',
+      ],
+      avoid: [
+        'Very low-rise styles that sit below the natural waist',
+      ],
+    },
+
+    Pear: {
+      whatWorks: [
+        'Wide-leg and straight-leg trousers',
+        'A-line skirts',
+        'Bootcut jeans',
+        'Midi skirts with volume',
+      ],
+      avoid: [
+        'Tapered or skinny trousers',
+        'Pencil skirts with no volume',
+        'Cargo pockets at the hip',
+      ],
+    },
+
+    Apple: {
+      whatWorks: [
+        'Straight-leg and wide-leg trousers',
+        'Pull-on or elasticated waists',
+        'Palazzo pants',
+      ],
+      avoid: [
+        'Very high-waisted styles that cut uncomfortably',
+        'Extremely low-rise styles',
+      ],
+    },
+
+    Rectangle: {
+      whatWorks: [
+        'High-waisted trousers',
+        'Wide-leg jeans',
+        'Textured or pleated trousers',
+        'Paperbag waist styles',
+      ],
+      avoid: [
+        'Very flat-front straight trousers in stiff fabric with no detail',
+      ],
+    },
+
+    'Inverted Triangle': {
+      whatWorks: [
+        'Wide-leg trousers',
+        'Full and pleated skirts',
+        'Cargo styles',
+        'Patterned or textured bottoms',
+      ],
+      avoid: [
+        'Very tapered or straight-leg styles that contrast with broader shoulders',
+      ],
+    },
+
+  },
+
+  // ── Dresses ───────────────────────────────────────────────────────
+
+  dresses: {
+
+    Hourglass: {
+      whatWorks: [
+        'Wrap dresses',
+        'Fit-and-flare',
+        'Bodycon with stretch',
+        'Belted midis',
+      ],
+      avoid: [
+        'Completely shapeless shift dresses',
+        'Drop-waist styles',
+      ],
+    },
+
+    Pear: {
+      whatWorks: [
+        'Empire waist',
+        'A-line',
+        'Fit-and-flare',
+        'Wrap dresses with a defined waist',
+      ],
+      avoid: [
+        'Very fitted hip-skimming styles',
+        'Shift dresses with no waist definition',
+      ],
+    },
+
+    Apple: {
+      whatWorks: [
+        'Wrap dresses',
+        'Shirt dresses worn open',
+        'Empire waist',
+        'Floaty midi styles',
+      ],
+      avoid: [
+        'Very fitted bodycon styles',
+        'Dresses with a defined waist that sits at the widest point',
+      ],
+    },
+
+    Rectangle: {
+      whatWorks: [
+        'Wrap dresses',
+        'Belted styles',
+        'Dresses with ruffle or peplum detail',
+        'Tiered midis',
+      ],
+      avoid: [
+        'Completely straight shift dresses with no shape or movement',
+      ],
+    },
+
+    'Inverted Triangle': {
+      whatWorks: [
+        'A-line',
+        'Fit-and-flare',
+        'Full skirt styles',
+        'Wrap dresses with volume below the waist',
+      ],
+      avoid: [
+        'Strapless or halter styles',
+        'Very structured shoulders on dress tops',
+      ],
+    },
+
+  },
+
+  // ── Skirts ────────────────────────────────────────────────────────
+
+  skirts: {
+
+    Hourglass: {
+      whatWorks: [
+        'Fitted midi skirts',
+        'Wrap skirts',
+        'High-waisted pencil skirts',
+        'A-line',
+      ],
+      avoid: [
+        'Very voluminous full skirts that overpower the proportions',
+      ],
+    },
+
+    Pear: {
+      whatWorks: [
+        'A-line',
+        'Flared',
+        'Pleated midis',
+        'Tiered styles',
+      ],
+      avoid: [
+        'Pencil skirts',
+        'Very fitted straight skirts',
+        'Wrap skirts that pull across the hip',
+      ],
+    },
+
+    Apple: {
+      whatWorks: [
+        'A-line',
+        'Floaty midi',
+        'Elasticated waist styles',
+        'Wrap skirts',
+      ],
+      avoid: [
+        'Very fitted pencil skirts',
+        'Styles with waistbands that dig in',
+      ],
+    },
+
+    Rectangle: {
+      whatWorks: [
+        'Pleated, tiered, ruffled, or textured skirts',
+        'Wrap styles',
+      ],
+      avoid: [
+        'Flat-front pencil skirts with no detail or movement',
+      ],
+    },
+
+    'Inverted Triangle': {
+      whatWorks: [
+        'Full and A-line skirts',
+        'Tiered midis',
+        'Pleated styles',
+        'Patterned skirts',
+      ],
+      avoid: [
+        'Very straight or fitted skirts that contrast with the broader upper body',
+      ],
+    },
+
+  },
+
+  // ── Outerwear ─────────────────────────────────────────────────────
+
+  outerwear: {
+
+    Hourglass: {
+      whatWorks: [
+        'Belted coats',
+        'Wrap coats',
+        'Fitted wool coats',
+        'Trench coats with a tie',
+      ],
+      avoid: [
+        'Completely unstructured puffer styles that hide the shape entirely',
+      ],
+    },
+
+    Pear: {
+      whatWorks: [
+        'A-line coats',
+        'Structured coats that skim the hip',
+        'Trench coats',
+      ],
+      avoid: [
+        'Coats that flare significantly at the hip',
+        'Very voluminous puffers below the waist',
+      ],
+    },
+
+    Apple: {
+      whatWorks: [
+        'Longline coats',
+        'Open-front styles',
+        "Straight-line coats that don't pull across the middle",
+      ],
+      avoid: [
+        'Cropped jackets',
+        'Very fitted coats across the midsection',
+      ],
+    },
+
+    Rectangle: {
+      whatWorks: [
+        'Belted or wrap coats',
+        'Double-breasted styles',
+        'Textured or bouclé coats',
+      ],
+      avoid: [
+        'Very straight unstructured longline coats with no shape',
+      ],
+    },
+
+    'Inverted Triangle': {
+      whatWorks: [
+        'Hip-length or longer coats',
+        'Raglan or dolman sleeve styles',
+        'A-line silhouettes',
+      ],
+      avoid: [
+        'Strongly padded or structured shoulders',
+        'Cropped styles that draw attention to the upper body',
+      ],
+    },
+
+  },
+
+  // ── Necklines ─────────────────────────────────────────────────────
+  // Base necklines per body type. Face shape modifiers are applied at
+  // engine time via necklineFaceModifiers — only where guidance
+  // genuinely conflicts with the body-type base.
+
+  necklines: {
+    Hourglass:           ['V-neck', 'Sweetheart', 'Scoop neck'],
+    Pear:                ['Boat neck', 'Off-shoulder', 'Square neck'],
+    Apple:               ['V-neck', 'Deep scoop', 'Wrap'],
+    Rectangle:           ['Square neck', 'V-neck', 'Scoop neck'],
+    'Inverted Triangle': ['V-neck', 'Deep scoop', 'U-neck'],
+  },
+
+  // ── Neckline face modifiers ────────────────────────────────────────
+  // Preserved exactly from the original clothingRules.faceModifiers.
+  // Only included where face-shape guidance genuinely conflicts with
   // or improves upon the body-type base necklines.
 
-  faceModifiers: {
+  necklineFaceModifiers: {
 
     Round: {
-      // Base for Pear includes boat neck and square neck — both horizontal
-      // lines that can amplify the roundness of a round face.
-      Pear: {
-        necklines: ['V-neck', 'Off-shoulder', 'Deep scoop'],
-      },
-      // Base for Rectangle includes square neck, which creates a strong
-      // horizontal line that tends to widen a round face.
-      Rectangle: {
-        necklines: ['V-neck', 'Scoop neck', 'Cowl neck'],
-      },
+      Pear:      { necklines: ['V-neck', 'Off-shoulder', 'Deep scoop'] },
+      Rectangle: { necklines: ['V-neck', 'Scoop neck', 'Cowl neck'] },
     },
 
     Heart: {
-      // Base for Hourglass includes sweetheart, which tapers to a point
-      // and can echo a heart face's narrow chin. Wider necklines add
-      // perceived width at the jaw and feel more balanced.
-      Hourglass: {
-        necklines: ['Boat neck', 'Square neck', 'Off-shoulder'],
-      },
-      // Base for Apple is V-neck, deep scoop, wrap — all draw attention
-      // centrally downward. A heart face tends to benefit from width at
-      // the collarbone, which these don't offer.
-      Apple: {
-        necklines: ['Boat neck', 'Off-shoulder', 'Square neck'],
-      },
-      // Base for Inverted Triangle includes V-neck and deep scoop, which
-      // can draw the eye toward a narrower chin rather than balancing it.
-      // Softer, slightly wider necklines suit this combination better.
-      'Inverted Triangle': {
-        necklines: ['Cowl neck', 'Scoop neck', 'Square neck'],
-      },
+      Hourglass:           { necklines: ['Boat neck', 'Square neck', 'Off-shoulder'] },
+      Apple:               { necklines: ['Boat neck', 'Off-shoulder', 'Square neck'] },
+      'Inverted Triangle': { necklines: ['Cowl neck', 'Scoop neck', 'Square neck'] },
     },
 
     Square: {
-      // Base for Pear includes square neck, which echoes and can
-      // strengthen angular jaw features rather than softening them.
-      Pear: {
-        necklines: ['V-neck', 'Scoop neck', 'Off-shoulder'],
-      },
-      // Base for Rectangle includes square neck for the same reason —
-      // it can reinforce rather than complement a square face shape.
-      Rectangle: {
-        necklines: ['V-neck', 'Scoop neck', 'Cowl neck'],
-      },
+      Pear:      { necklines: ['V-neck', 'Scoop neck', 'Off-shoulder'] },
+      Rectangle: { necklines: ['V-neck', 'Scoop neck', 'Cowl neck'] },
     },
 
     Diamond: {
-      // Base for Hourglass (V-neck, sweetheart, scoop) draws attention
-      // to the center and narrows the perceived face width. Diamond faces
-      // tend to benefit from necklines that add width at the collarbone.
-      Hourglass: {
-        necklines: ['Boat neck', 'Square neck', 'Off-shoulder'],
-      },
-      // Base for Apple is V-neck and deep scoop — same issue. Wider
-      // necklines at the collarbone work better for a diamond face.
-      Apple: {
-        necklines: ['Boat neck', 'Off-shoulder', 'Square neck'],
-      },
-      // Base for Rectangle includes V-neck which narrows — swap to wider
-      // options that add the breadth a diamond face shape benefits from.
-      Rectangle: {
-        necklines: ['Boat neck', 'Square neck', 'Scoop neck'],
-      },
+      Hourglass: { necklines: ['Boat neck', 'Square neck', 'Off-shoulder'] },
+      Apple:     { necklines: ['Boat neck', 'Off-shoulder', 'Square neck'] },
+      Rectangle: { necklines: ['Boat neck', 'Square neck', 'Scoop neck'] },
     },
 
     Oblong: {
-      // Base for Hourglass (V-neck, sweetheart, scoop) all elongate —
-      // which can make an already long face feel more pronounced.
-      // Horizontal necklines add perceived width and break the vertical.
-      Hourglass: {
-        necklines: ['Boat neck', 'Square neck', 'Off-shoulder'],
-      },
-      // Base for Apple includes V-neck and deep scoop — both elongate.
-      // Wider, more horizontal necklines suit an oblong face better.
-      Apple: {
-        necklines: ['Boat neck', 'Off-shoulder', 'Scoop neck'],
-      },
-      // Base for Rectangle includes V-neck which elongates. Override
-      // with options that add horizontal interest near the face.
-      Rectangle: {
-        necklines: ['Boat neck', 'Square neck', 'Cowl neck'],
-      },
-      // Base for Inverted Triangle (V-neck, deep scoop, U-neck) all
-      // create vertical pull — not ideal for an already long face.
-      'Inverted Triangle': {
-        necklines: ['Boat neck', 'Scoop neck', 'Off-shoulder'],
-      },
+      Hourglass:           { necklines: ['Boat neck', 'Square neck', 'Off-shoulder'] },
+      Apple:               { necklines: ['Boat neck', 'Off-shoulder', 'Scoop neck'] },
+      Rectangle:           { necklines: ['Boat neck', 'Square neck', 'Cowl neck'] },
+      'Inverted Triangle': { necklines: ['Boat neck', 'Scoop neck', 'Off-shoulder'] },
     },
 
-    // Oval: no overrides — oval is the most versatile face shape and
-    // works naturally with all body-type base necklines.
+    // Oval: no overrides — works naturally with all body-type base necklines.
 
   },
 
