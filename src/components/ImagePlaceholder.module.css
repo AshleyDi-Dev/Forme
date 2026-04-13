@@ -24,6 +24,21 @@
   line-height: var(--line-height-body);
 }
 
+.boxFilled {
+  flex: 1;
+  aspect-ratio: 1;
+  min-width: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
 @media (max-width: 360px) {
   .row {
     flex-direction: column;

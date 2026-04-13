@@ -280,7 +280,7 @@ function BodySection({ bodyType, onReset, resetting }) {
     <SectionCard eyebrow="Body proportions">
       <p className={styles.resultTitle}>{data.label}</p>
       <p className={styles.resultDesc}>{data.description}</p>
-      <ImagePlaceholder />
+      <ImagePlaceholder result={bodyType} />
       <div className={styles.cardActions}>
         <RetakeLink to="/analyze/body" />
         <ResetControl onReset={onReset} resetting={resetting} />
