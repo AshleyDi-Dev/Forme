@@ -332,7 +332,7 @@ function ResultScreen({ resultType, confidence, onSave, onRetake, onReset, savin
           <p className={styles.resultDescription}>{result.description}</p>
         </div>
 
-        <ImagePlaceholder result={resultType} />
+        <ImagePlaceholder result={result.label} />
 
         <div className={styles.whatThisMeans}>
           <p className={styles.sectionHeading}>What this means</p>
@@ -375,7 +375,7 @@ function PreviousResultScreen({ resultType, onRetake, onReset, resetting }) {
           <p className={styles.resultDescription}>{result.description}</p>
         </div>
 
-        <ImagePlaceholder result={resultType} />
+        <ImagePlaceholder result={result.label} />
 
         <div className={styles.whatThisMeans}>
           <p className={styles.sectionHeading}>What this means</p>

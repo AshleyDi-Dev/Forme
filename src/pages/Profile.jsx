@@ -18,7 +18,7 @@ const BODY_DATA = {
     description: 'Your hips are the fullest part of your frame, with a narrower upper body. A-line skirts and structured tops that add interest above the waist tend to work especially well.',
   },
   InvertedTriangle: {
-    label:       'Inverted triangle',
+    label:       'Inverted Triangle',
     description: 'Your shoulders are your widest point, with slimmer hips beneath. Wider-leg trousers, full skirts, and V-necks tend to create a balanced look.',
   },
   Rectangle: {
@@ -280,7 +280,7 @@ function BodySection({ bodyType, onReset, resetting }) {
     <SectionCard eyebrow="Body proportions">
       <p className={styles.resultTitle}>{data.label}</p>
       <p className={styles.resultDesc}>{data.description}</p>
-      <ImagePlaceholder result={bodyType} />
+      <ImagePlaceholder result={data.label} />
       <div className={styles.cardActions}>
         <RetakeLink to="/analyze/body" />
         <ResetControl onReset={onReset} resetting={resetting} />
