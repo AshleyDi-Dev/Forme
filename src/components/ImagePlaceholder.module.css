@@ -39,6 +39,16 @@
   object-fit: contain;
 }
 
+.rowThree {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.rowThree > * {
+  flex: 1;
+  min-width: 0;
+}
+
 @media (max-width: 360px) {
   .row {
     flex-direction: column;

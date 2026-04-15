@@ -16,6 +16,7 @@ import { getRecommendations } from '../lib/recommendationsEngine'
 export function useRecommendations() {
   const { user } = useAuth()
   const [recommendations, setRecommendations] = useState(null)
+  const [styleSummary, setStyleSummary] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -38,12 +39,14 @@ export function useRecommendations() {
         return
       }
 
-      setRecommendations(getRecommendations(data ?? {}))
+      const summary = data ?? {}
+      setStyleSummary(summary)
+      setRecommendations(getRecommendations(summary))
       setLoading(false)
     }
 
     load()
   }, [user])
 
-  return { recommendations, loading, error }
+  return { recommendations, styleSummary, loading, error }
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRecommendations } from '../hooks/useRecommendations'
 import ImagePlaceholder from '../components/ImagePlaceholder'
+import BottomsPlaceholder from '../components/BottomsPlaceholder'
 import styles from './Recommendations.module.css'
 
 // ── Chevron icon ──────────────────────────────────────────────────
@@ -103,12 +104,15 @@ function Card({ eyebrow, title, children }) {
 
 const GARMENT_NULL_MSG = 'Complete the body proportions quiz to unlock this category.'
 
-function GarmentCard({ label, data }) {
+function GarmentCard({ label, data, bodyType }) {
   return (
     <Card eyebrow="Clothing" title={label}>
       {data ? (
         <>
-          <ImagePlaceholder />
+          {label === 'Bottoms'
+            ? <BottomsPlaceholder bodyType={bodyType} />
+            : <ImagePlaceholder />
+          }
           <ChipRow items={data.whatWorks} />
           <AvoidBlock items={data.avoid} />
         </>
@@ -286,7 +290,6 @@ function ColourCard({ color }) {
       {color ? (
         <>
           <p className={styles.whyText}>{color.why}</p>
-          <ImagePlaceholder />
           <SwatchGrid swatches={color.paletteHero} />
           <div className={styles.group}>
             <p className={styles.groupLabel}>Your neutrals</p>
@@ -317,7 +320,7 @@ function ColourCard({ color }) {
 // ── Main component ────────────────────────────────────────────────
 
 export default function Recommendations() {
-  const { recommendations, loading, error } = useRecommendations()
+  const { recommendations, styleSummary, loading, error } = useRecommendations()
 
   if (loading) return null
 
@@ -353,7 +356,7 @@ export default function Recommendations() {
           <div className={styles.cardGrid}>
             <GarmentCard  label="Tops"      data={garments?.tops}      />
             <GarmentCard  label="Jackets"   data={garments?.jackets}   />
-            <GarmentCard  label="Bottoms"   data={garments?.bottoms}   />
+            <GarmentCard  label="Bottoms"   data={garments?.bottoms}   bodyType={garments?.bodyType ?? styleSummary?.body_type} />
             <GarmentCard  label="Dresses"   data={garments?.dresses}   />
             <GarmentCard  label="Skirts"    data={garments?.skirts}    />
             <GarmentCard  label="Outerwear" data={garments?.outerwear} />
