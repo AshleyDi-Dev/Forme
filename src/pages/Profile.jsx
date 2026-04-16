@@ -398,7 +398,6 @@ function ColorSection({ colorSeason, onReset, resetting }) {
       </div>
 
       <p className={styles.resultDesc}>{data.description}</p>
-      <ImagePlaceholder />
 
       <div className={styles.cardActions}>
         <RetakeLink to="/analyze/color" />

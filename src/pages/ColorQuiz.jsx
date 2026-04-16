@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext'
 import QuizEngine from '../components/QuizEngine'
 import Button from '../components/Button'
 import styles from './ColorQuiz.module.css'
-import ImagePlaceholder from '../components/ImagePlaceholder'
 
 // ── Questions ────────────────────────────────────────────────────
 
@@ -358,7 +357,6 @@ function ResultContent({ result }) {
   return (
     <>
       <PaletteStrip colors={result.palette} />
-      <ImagePlaceholder />
 
       <div className={styles.guidance}>
         <div className={styles.guidanceBlock}>
